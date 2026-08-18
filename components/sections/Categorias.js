@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useRef } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { categories, DEFAULT_CATEGORY } from "@/data/categories";
 import { curatedSelection, piecesByCategory } from "@/data/portfolio";
 import CategoryFilter from "@/components/portfolio/CategoryFilter";
 import Gallery from "@/components/portfolio/Gallery";
 import Lightbox from "@/components/portfolio/Lightbox";
+import { useReveal } from "@/hooks/useReveal";
 import styles from "./Categorias.module.css";
 
 const visibleCategories = categories.filter((c) => c.visible);
@@ -64,8 +65,11 @@ export default function Categorias() {
     [pieces.length]
   );
 
+  const sectionRef = useRef(null);
+  useReveal(sectionRef);
+
   return (
-    <section id="categorias" className={styles.section}>
+    <section id="categorias" className={styles.section} ref={sectionRef}>
       <div className={styles.inner}>
         <div className={styles.eyebrowRow} data-rv>
           <span>04 — Categorías</span>
