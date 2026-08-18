@@ -15,9 +15,9 @@ export const hasPublicUrl = Boolean(RAW_SITE_URL);
 /** Usuario de Instagram. Vacío hasta que se confirme el real. */
 const instagramUser = (process.env.NEXT_PUBLIC_INSTAGRAM || "").replace(/^@/, "").trim();
 
-const whatsappNumber = "+506 8783-7575";
-const whatsappDigits = "50687837575";
-const email = "iansolisv@gmail.com";
+const whatsappNumber = "+506 8980-8289";
+const whatsappDigits = "50689808289";
+const email = "ianstudiocr@gmail.com";
 
 export const site = {
   name: "Ian Studio",
@@ -36,6 +36,7 @@ export const site = {
     whatsapp: {
       label: whatsappNumber,
       href: `https://wa.me/${whatsappDigits}`,
+      digits: whatsappDigits,
     },
     email: {
       label: email,

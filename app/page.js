@@ -22,8 +22,8 @@ function JsonLd() {
     name: site.name,
     description: site.description,
     url: siteUrl,
-    email: "iansolisv@gmail.com",
-    telephone: "+50687837575",
+    email: site.contact.email.label,
+    telephone: `+${site.contact.whatsapp.digits}`,
     areaServed: "Costa Rica",
     image: `${siteUrl}/opengraph-image.jpg`,
   };
