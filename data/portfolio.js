@@ -1,0 +1,365 @@
+/**
+ * Banco fotográfico real de Ian Studio.
+ *
+ * Solo material propio y aprobado: nada de stock, nada generado, nada
+ * duplicado para rellenar una categoría. Las medidas son las reales del
+ * archivo en `public/images` (ver `scripts/image-inventory.json`).
+ *
+ * Campos
+ *   id          identificador estable, también nombre del archivo
+ *   categoria   id de `data/categories.js`
+ *   src         ruta pública
+ *   width/height   píxeles reales del archivo — reservan el espacio (CLS 0)
+ *   orientacion 'horizontal' | 'vertical'
+ *   resolucion  'alta' | 'baja'  — 'baja' nunca se amplía ni ocupa protagonismo
+ *   alt         texto alternativo descriptivo
+ *   titulo      título editorial de la pieza
+ *   detalle     metadato discreto (sujeto concreto)
+ *   anio, ubicacion, trabajo   metadata de ficha
+ *   peso        'alto' | 'medio' | 'bajo' — peso visual en la composición
+ *   seleccion   entra en la edición curada de «Todo»
+ *   orden       posición dentro de su categoría (y de «Todo» vía ordenTodo)
+ *   ordenTodo   posición dentro de la selección curada
+ *   destacado   pieza cabecera de su categoría
+ *
+ * Para añadir una fotografía: colocarla en `public/images` con nombre en
+ * minusculas-con-guiones y añadir una entrada aquí. No hay que tocar ningún
+ * componente.
+ */
+
+const CR = "Costa Rica";
+
+export const pieces = [
+  // ─────────────────────────────────────────────────────────── AUTOMOTRIZ
+  {
+    id: "auto-porsche-gt3rs",
+    categoria: "automotriz",
+    src: "/images/auto-porsche-gt3rs.jpg",
+    width: 1448,
+    height: 1086,
+    orientacion: "horizontal",
+    resolucion: "alta",
+    alt: "Porsche 911 GT3 RS plateado de perfil, con el alerón trasero y la llanta dorada bajo luz dura.",
+    titulo: "Perfil y alerón",
+    detalle: "Porsche 911 GT3 RS",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: true,
+    orden: 1,
+    ordenTodo: 1,
+    destacado: true,
+  },
+  {
+    id: "auto-mclaren-675lt",
+    categoria: "automotriz",
+    src: "/images/auto-mclaren-675lt.jpg",
+    width: 1086,
+    height: 1448,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Frontal de un McLaren 675LT gris oscuro: faro, entrada de aire y splitter de fibra de carbono.",
+    titulo: "Crop de faro",
+    detalle: "McLaren 675LT",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: true,
+    orden: 2,
+    ordenTodo: 6,
+    destacado: false,
+  },
+  {
+    id: "auto-shelby-gt500",
+    categoria: "automotriz",
+    src: "/images/auto-shelby-gt500.jpg",
+    width: 1086,
+    height: 1448,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Frontal de un Shelby GT500 naranja con capó ventilado y parrilla oscura.",
+    titulo: "Frontal en luz dura",
+    detalle: "Shelby GT500",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: true,
+    orden: 3,
+    ordenTodo: 3,
+    destacado: false,
+  },
+  {
+    id: "auto-amg-black-series",
+    categoria: "automotriz",
+    src: "/images/auto-amg-black-series.jpg",
+    width: 1229,
+    height: 820,
+    orientacion: "horizontal",
+    resolucion: "alta",
+    alt: "Mercedes-AMG GT Black Series naranja en tres cuartos trasero, con el alerón alto recortado contra el cielo.",
+    titulo: "Tres cuartos trasero",
+    detalle: "Mercedes-AMG GT Black Series",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: true,
+    orden: 4,
+    ordenTodo: 4,
+    destacado: false,
+  },
+  {
+    id: "auto-bmw-m4-csl",
+    categoria: "automotriz",
+    src: "/images/auto-bmw-m4-csl.jpg",
+    width: 960,
+    height: 640,
+    orientacion: "horizontal",
+    resolucion: "alta",
+    alt: "Capó y parrilla de un BMW M4 CSL gris mate con franjas rojas y detalles en fibra de carbono.",
+    titulo: "Capó y parrilla",
+    detalle: "BMW M4 CSL",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "medio",
+    seleccion: true,
+    orden: 7,
+    ordenTodo: 8,
+    destacado: false,
+  },
+  {
+    id: "auto-ferrari-sf90",
+    categoria: "automotriz",
+    src: "/images/auto-ferrari-sf90.jpg",
+    width: 384,
+    height: 512,
+    orientacion: "vertical",
+    // Archivo de baja resolución: se usa a tamaño contenido, nunca a sangre.
+    resolucion: "baja",
+    alt: "Ferrari SF90 gris mate con franjas rojas, estacionado en un encuentro automotriz.",
+    titulo: "Encuentro",
+    detalle: "Ferrari SF90",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía",
+    peso: "bajo",
+    seleccion: false,
+    orden: 5,
+    ordenTodo: null,
+    destacado: false,
+  },
+  {
+    id: "auto-amg-gt-rojo",
+    categoria: "automotriz",
+    src: "/images/auto-amg-gt-rojo.jpg",
+    width: 384,
+    height: 512,
+    orientacion: "vertical",
+    resolucion: "baja",
+    alt: "Mercedes-AMG GT Black Series rojo de perfil en un encuentro automotriz al aire libre.",
+    titulo: "Color en el grid",
+    detalle: "Mercedes-AMG GT Black Series",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía",
+    peso: "bajo",
+    seleccion: false,
+    orden: 6,
+    ordenTodo: null,
+    destacado: false,
+  },
+
+  // ────────────────────────────────────────────────────────── GASTRONOMÍA
+  {
+    id: "food-albondigas-plato",
+    categoria: "gastronomia",
+    src: "/images/food-albondigas-plato.jpg",
+    width: 2000,
+    height: 2500,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Bandeja de albóndigas crudas recién porcionadas sobre un plato blanco, con la cocina desenfocada al fondo.",
+    titulo: "Preparación en plato",
+    detalle: "Albóndigas de res",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: true,
+    orden: 1,
+    ordenTodo: 2,
+    destacado: true,
+  },
+  {
+    id: "food-spaghetti-albondigas",
+    categoria: "gastronomia",
+    src: "/images/food-spaghetti-albondigas.jpg",
+    width: 1023,
+    height: 1537,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Bowl negro con spaghetti, salsa de tomate, albóndigas y pesto, sobre tabla de madera.",
+    titulo: "Plato terminado",
+    detalle: "Spaghetti con albóndigas",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: true,
+    orden: 2,
+    ordenTodo: 7,
+    destacado: false,
+  },
+  {
+    id: "food-lasana-vino",
+    categoria: "gastronomia",
+    src: "/images/food-lasana-vino.jpg",
+    width: 897,
+    height: 1600,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Pasta al horno gratinada en bandeja de aluminio junto a una copa de vino tinto sobre madera.",
+    titulo: "Mesa y copa",
+    detalle: "Pasta al horno",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "medio",
+    seleccion: true,
+    orden: 3,
+    ordenTodo: 5,
+    destacado: false,
+  },
+  {
+    id: "food-bandeja-carne-mechada",
+    categoria: "gastronomia",
+    src: "/images/food-bandeja-carne-mechada.jpg",
+    width: 1024,
+    height: 1536,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Bandeja de tres compartimentos con carne mechada, picadillo y zucchini, y una mano tomando el tenedor.",
+    titulo: "Bandeja del día",
+    detalle: "Carne mechada",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "medio",
+    seleccion: true,
+    orden: 4,
+    ordenTodo: 9,
+    destacado: false,
+  },
+  {
+    id: "food-preparacion-cocina",
+    categoria: "gastronomia",
+    src: "/images/food-preparacion-cocina.jpg",
+    width: 1086,
+    height: 1448,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Manos cortando cebollín con un cuchillo de chef sobre tabla blanca, con cebolla y tomate al fondo.",
+    titulo: "Cuchillo y tabla",
+    detalle: "Corte en cocina",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "medio",
+    seleccion: false,
+    orden: 5,
+    ordenTodo: null,
+    destacado: false,
+  },
+
+  // ───────────────────────────────────────────────────────────── ESPACIOS
+  // Categoría oculta en el lanzamiento: estas dos piezas son el antes y el
+  // después del mismo baño y viven en la sección 07 — Edición.
+  {
+    id: "espacio-bano-despues",
+    categoria: "espacios",
+    src: "/images/espacio-bano-despues.jpg",
+    width: 1086,
+    height: 1448,
+    orientacion: "vertical",
+    resolucion: "alta",
+    alt: "Baño reformado con tono cálido y neutro: mueble oscuro, lavamanos redondo y ducha de vidrio.",
+    titulo: "Baño — entrega final",
+    detalle: "Interiorismo",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía · Edición",
+    peso: "alto",
+    seleccion: false,
+    orden: 1,
+    ordenTodo: null,
+    destacado: true,
+  },
+  {
+    id: "espacio-bano-antes",
+    categoria: "espacios",
+    src: "/images/espacio-bano-antes.jpg",
+    width: 672,
+    height: 896,
+    orientacion: "vertical",
+    resolucion: "baja",
+    alt: "El mismo baño antes de la edición: archivo original sin corrección de color ni limpieza de escena.",
+    titulo: "Baño — archivo original",
+    detalle: "Interiorismo",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía",
+    peso: "bajo",
+    seleccion: false,
+    orden: 2,
+    ordenTodo: null,
+    destacado: false,
+  },
+
+  // ─────────────────────────────────────────────────── DETRÁS DE CÁMARA
+  {
+    id: "bts-camara-gimbal",
+    categoria: "detras",
+    src: "/images/bts-camara-gimbal.jpg",
+    width: 474,
+    height: 678,
+    orientacion: "vertical",
+    resolucion: "baja",
+    alt: "Cámara Sony montada sobre un gimbal, guardada en su maleta de espuma.",
+    titulo: "Equipo en maleta",
+    detalle: "Set de rodaje",
+    anio: 2026,
+    ubicacion: CR,
+    trabajo: "Fotografía",
+    peso: "bajo",
+    seleccion: false,
+    orden: 1,
+    ordenTodo: null,
+    destacado: true,
+  },
+];
+
+/** Índice por id, para lookups baratos desde cualquier sección. */
+export const piecesById = Object.fromEntries(pieces.map((p) => [p.id, p]));
+
+/** Devuelve una pieza por id, o undefined. */
+export function getPiece(id) {
+  return piecesById[id];
+}
+
+/** Piezas de una categoría, en su orden editorial. */
+export function piecesByCategory(categoryId) {
+  return pieces.filter((p) => p.categoria === categoryId).sort((a, b) => a.orden - b.orden);
+}
+
+/** La edición curada de «Todo»: alterna disciplinas, no vuelca el banco. */
+export function curatedSelection() {
+  return pieces
+    .filter((p) => p.seleccion && p.ordenTodo != null)
+    .sort((a, b) => a.ordenTodo - b.ordenTodo);
+}
+
+export default pieces;
