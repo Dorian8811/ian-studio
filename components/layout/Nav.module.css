@@ -1,0 +1,272 @@
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 1000;
+  background: var(--a);
+  box-shadow: 0 0 18px var(--a);
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 800;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid transparent;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease, border-color 0.5s ease;
+}
+
+.header.scrolled {
+  background: rgba(0, 0, 0, 0.72);
+  border-bottom-color: var(--color-hairline);
+}
+
+.bar {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  line-height: 1;
+  flex: none;
+}
+
+.brand img {
+  height: 34px;
+  width: auto;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.wordmark {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.sublabel {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.24em;
+  color: rgba(246, 247, 250, 0.42);
+  white-space: nowrap;
+}
+
+@media (max-width: 1199px) {
+  .sublabel { display: none; }
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 32px);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 1319px) {
+  .navRight { font-size: 9.5px; }
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 32px);
+}
+
+@media (max-width: 1119px) {
+  .navLinks { display: none; }
+}
+
+.navLink {
+  color: rgba(246, 247, 250, 0.58);
+  transition: color var(--dur-ui) ease;
+}
+
+.navLink:hover {
+  color: var(--color-white);
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border: 1px solid rgba(246, 247, 250, 0.18);
+  border-radius: 2px;
+  color: var(--color-white);
+  white-space: nowrap;
+  flex: none;
+  transition: border-color var(--dur-ui) ease, background var(--dur-ui) ease;
+}
+
+.cta:hover {
+  border-color: var(--w);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-white);
+}
+
+/* La maqueta móvil solo muestra logo + burger en el header — el CTA
+   vive como botón a ancho completo dentro del hero y del menú overlay. */
+@media (max-width: 1119px) {
+  .cta { display: none; }
+}
+
+.ctaDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--w);
+  box-shadow: 0 0 10px var(--w);
+}
+
+.burger {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border: 1px solid rgba(246, 247, 250, 0.18);
+  border-radius: 2px;
+  color: rgba(246, 247, 250, 0.8);
+  transition: border-color 0.35s;
+}
+
+.burger:hover {
+  border-color: var(--w);
+}
+
+@media (max-width: 1119px) {
+  .burger { display: flex; }
+}
+
+.burgerIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.burgerIcon span {
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Mobile menu overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  background: rgba(0, 0, 0, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 96px 24px 60px;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.62s var(--ease-out);
+}
+
+.overlay.open {
+  clip-path: inset(0 0 0% 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition: opacity 0.3s ease;
+    clip-path: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.overlayLogo {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  height: 30px;
+  width: auto;
+}
+
+.overlayClose {
+  position: absolute;
+  top: 26px;
+  right: 20px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.6);
+  padding: 12px;
+}
+
+.overlayLink {
+  font-size: clamp(30px, 9vw, 52px);
+  line-height: 1.34;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(246, 247, 250, 0.1);
+  padding: 4px 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.overlay.open .overlayLink {
+  opacity: 1;
+  transform: none;
+}
+
+.overlayLink.accent {
+  color: var(--w);
+}
+
+.overlayContact {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 44px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlayLink {
+    opacity: 1;
+    transform: none;
+  }
+}
