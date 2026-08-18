@@ -16,21 +16,26 @@ export default function Gallery({ pieces, onOpen, panelId }) {
   const cells = layoutGallery(pieces);
 
   return (
-    <div id={panelId} role="tabpanel" className={styles.grid}>
+    <div id={panelId} role="tabpanel" className={styles.masonry}>
       {cells.map((cell, i) => {
         const { piece } = cell;
         return (
           <div
             key={piece.id}
-            className={`${styles.cell} ${styles[`span-${cell.span}`]} ${cell.lowRes ? styles.lowRes : ""}`}
+            className={`${styles.cell} ${cell.hero ? styles.hero : ""} ${cell.lowRes ? styles.lowRes : ""}`}
           >
             <button type="button" className={styles.figure} onClick={() => onOpen(i)}>
-              <div className={styles.frame} style={{ aspectRatio: cell.aspect }}>
+              <div className={styles.frame}>
                 <Image
                   src={piece.src}
                   alt={piece.alt}
-                  fill
-                  sizes={cell.span >= 12 ? "100vw" : "(min-width: 1024px) 50vw, 100vw"}
+                  width={piece.width}
+                  height={piece.height}
+                  sizes={
+                    cell.hero
+                      ? "100vw"
+                      : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  }
                   quality={90}
                 />
                 <div className={styles.scrim} />
