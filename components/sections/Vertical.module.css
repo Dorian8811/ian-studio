@@ -29,7 +29,6 @@
   text-transform: uppercase;
   color: rgba(246, 247, 250, 0.36);
   padding-bottom: 22px;
-  border-bottom: 1px solid var(--color-hairline);
 }
 
 @media (min-width: 1024px) {
