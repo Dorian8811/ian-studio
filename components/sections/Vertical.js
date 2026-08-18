@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import ReelVideo from "@/components/ui/ReelVideo";
 import { verticalSlides, verticalNote } from "@/data/content";
+import { useReveal } from "@/hooks/useReveal";
 import styles from "./Vertical.module.css";
 
 const SLIDE_W = 300 + 24; // ancho + gap del track desktop
@@ -14,8 +15,11 @@ export default function Vertical() {
 
   const go = (i) => setActive((i + count) % count);
 
+  const sectionRef = useRef(null);
+  useReveal(sectionRef);
+
   return (
-    <section id="vertical" className={styles.section}>
+    <section id="vertical" className={styles.section} ref={sectionRef}>
       <div className={styles.inner}>
         <div className={styles.eyebrowRow} data-rv>
           <span>05 — Contenido vertical</span>
