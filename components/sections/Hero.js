@@ -18,14 +18,7 @@ export default function Hero() {
           />
         </div>
         <div className={styles.scrimH} />
-        <div className={styles.secondary}>
-          <Image
-            src={hero.imagenSecundaria.src}
-            alt={hero.imagenSecundaria.alt}
-            fill
-            sizes="140px"
-          />
-        </div>
+
         <div className={styles.caption} data-rv>
           <span className={styles.captionLine} />
           {hero.caption}

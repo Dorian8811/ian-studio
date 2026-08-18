@@ -63,28 +63,6 @@
   }
 }
 
-.secondary {
-  display: none;
-}
-
-@media (max-width: 1023px) {
-  .secondary {
-    display: block;
-    position: absolute;
-    top: 44%;
-    right: 20px;
-    width: clamp(96px, 26vw, 140px);
-    height: clamp(120px, 33vw, 176px);
-    z-index: 3;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
-    overflow: hidden;
-  }
-
-  .secondary img {
-    object-fit: cover;
-  }
-}
-
 .caption {
   position: absolute;
   left: 46px;
