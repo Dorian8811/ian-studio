@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500;1,6..96,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{background:#000}
+body{margin:0;background:#000;color:#f6f7fa;font-family:Archivo,'Helvetica Neue',Helvetica,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+::selection{background:oklch(0.58 0.18 258);color:#fff}
+a{color:#f6f7fa;text-decoration:none}
+a:hover{color:oklch(0.68 0.15 258)}
+@keyframes ticker{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes drift{0%{transform:scale(1.08) translate3d(0,0,0)}50%{transform:scale(1.14) translate3d(-2%,-1%,0)}100%{transform:scale(1.08) translate3d(0,0,0)}}
+@keyframes cue{0%{transform:translateY(0);opacity:.15}45%{opacity:.75}100%{transform:translateY(14px);opacity:.15}}
+</style>
+</helmet>
+
+<div style="position:relative;background:#000;color:#f6f7fa;font-family:Archivo,Helvetica,sans-serif">
+
+<div style="position:fixed;inset:0;z-index:900;pointer-events:none;mix-blend-mode:overlay;opacity:var(--grain,.055);background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E&quot;)"></div>
+
+<div style="position:fixed;top:0;left:0;height:2px;z-index:1000;background:var(--a,oklch(0.58 0.18 258));box-shadow:0 0 18px var(--a,oklch(0.58 0.18 258));width:0%" data-x="prog"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:800;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);borderBottom:1px solid rgba(246,247,250,.07);background:rgba(0,0,0,0);transition:background .5s ease,border-color .5s ease" data-x="nav">
+  <div style="max-width:1440px;margin:0 auto;padding:0 56px;height:74px;display:flex;align-items:center;justify-content:space-between;gap:40px">
+    <a href="#top" style="display:flex;align-items:center;gap:14px;line-height:1;flex:none">
+      <img src="img/logo.png" alt="Ian Studio" style="height:34px;width:auto;display:block;flex:none">
+      <span style="display:flex;flex-direction:column;gap:3px;padding-left:14px;border-left:1px solid rgba(255,255,255,.14)">
+        <span style="font-size:15px;font-weight:600;letter-spacing:.07em;white-space:nowrap">IAN STUDIO</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.24em;color:rgba(246,247,250,.42);white-space:nowrap" data-x="sublabel">FOTOGRAFÍA · VIDEO · CONTENIDO</span>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:clamp(14px,2vw,32px);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap" data-x="navsize">
+      <div style="display:flex;align-items:center;gap:clamp(14px,2vw,32px)" data-x="navlinks">
+        <a href="#perfil" style="color:rgba(246,247,250,.58);transition:color .3s" style-hover="color:#f6f7fa">Quién soy</a>
+        <a href="#especialidades" style="color:rgba(246,247,250,.58);transition:color .3s" style-hover="color:#f6f7fa">Especialidades</a>
+        <a href="#categorias" style="color:rgba(246,247,250,.58);transition:color .3s" style-hover="color:#f6f7fa">Categorías</a>
+        <a href="#vertical" style="color:rgba(246,247,250,.58);transition:color .3s" style-hover="color:#f6f7fa">Vertical</a>
+        <a href="#suburban" style="color:rgba(246,247,250,.58);transition:color .3s" style-hover="color:#f6f7fa">Automotriz</a>
+        <a href="#planes" style="color:rgba(246,247,250,.58);transition:color .3s" style-hover="color:#f6f7fa">Planes</a>
+      </div>
+      <span onClick="{{ toggleMenu }}" data-x="navburger" style="display:none;align-items:center;gap:10px;padding:11px 16px;border:1px solid rgba(246,247,250,.18);border-radius:2px;cursor:pointer;color:rgba(246,247,250,.8);transition:border-color .35s" style-hover="border-color:var(--w,oklch(0.62 0.17 258))">
+        <span style="display:flex;flex-direction:column;gap:3px"><span style="width:14px;height:1px;background:currentColor"></span><span style="width:14px;height:1px;background:currentColor"></span></span>Menú</span>
+      <a href="#contacto" style="display:flex;align-items:center;gap:9px;padding:11px 18px;border:1px solid rgba(246,247,250,.18);border-radius:2px;color:#f6f7fa;white-space:nowrap;flex:none;transition:border-color .35s,background .35s" style-hover="border-color:var(--w,oklch(0.62 0.17 258));background:rgba(255,255,255,.04)">
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--w,oklch(0.62 0.17 258));box-shadow:0 0 10px var(--w,oklch(0.62 0.17 258))"></span>Trabajemos juntos</a>
+    </nav>
+  </div>
+</header>
+
+<div data-x="menu" style="position:fixed;inset:0;z-index:790;background:rgba(0,0,0,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:none;flex-direction:column;justify-content:center;padding:96px 40px 60px">
+  <img src="img/logo.png" alt="Ian Studio" style="position:absolute;top:22px;left:40px;height:38px;width:auto">
+  <span onClick="{{ toggleMenu }}" style="position:absolute;top:26px;right:34px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.6);cursor:pointer;padding:12px">Cerrar ✕</span>
+  <a href="#perfil" onClick="{{ toggleMenu }}" style="font-size:clamp(30px,6vw,52px);line-height:1.34;font-weight:500;letter-spacing:-.03em;text-transform:uppercase;border-bottom:1px solid rgba(246,247,250,.1)">Quién soy</a>
+  <a href="#especialidades" onClick="{{ toggleMenu }}" style="font-size:clamp(30px,6vw,52px);line-height:1.34;font-weight:500;letter-spacing:-.03em;text-transform:uppercase;border-bottom:1px solid rgba(246,247,250,.1)">Especialidades</a>
+  <a href="#categorias" onClick="{{ toggleMenu }}" style="font-size:clamp(30px,6vw,52px);line-height:1.34;font-weight:500;letter-spacing:-.03em;text-transform:uppercase;border-bottom:1px solid rgba(246,247,250,.1);color:var(--w,oklch(0.62 0.17 258))">Categorías</a>
+  <a href="#vertical" onClick="{{ toggleMenu }}" style="font-size:clamp(30px,6vw,52px);line-height:1.34;font-weight:500;letter-spacing:-.03em;text-transform:uppercase;border-bottom:1px solid rgba(246,247,250,.1)">Vertical</a>
+  <a href="#suburban" onClick="{{ toggleMenu }}" style="font-size:clamp(30px,6vw,52px);line-height:1.34;font-weight:500;letter-spacing:-.03em;text-transform:uppercase;border-bottom:1px solid rgba(246,247,250,.1)">Automotriz</a>
+  <a href="#planes" onClick="{{ toggleMenu }}" style="font-size:clamp(30px,6vw,52px);line-height:1.34;font-weight:500;letter-spacing:-.03em;text-transform:uppercase;border-bottom:1px solid rgba(246,247,250,.1)">Planes</a>
+  <div style="display:flex;gap:34px;margin-top:44px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.5)">
+    <a href="https://wa.me/50687837575">+506 8783-7575</a><a href="mailto:iansolisv@gmail.com">iansolisv@gmail.com</a>
+  </div>
+</div>
+
+<section id="top" style="position:relative;min-height:100vh;display:grid;grid-template-columns:1.02fr .98fr;background:#000">
+  <div style="position:relative;overflow:hidden">
+    <div style="position:absolute;inset:-6%;animation:drift 30s ease-in-out infinite">
+      <img src="img/auto-3.jpg" alt="McLaren 675LT en sesión automotriz, Costa Rica" style="width:100%;height:100%;object-fit:cover;object-position:52% 50%;filter:contrast(1.06) saturate(1.02)">
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 34%,rgba(0,0,0,.35) 78%,#000 100%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.7) 100%)"></div>
+    <div style="position:absolute;left:46px;bottom:44px;display:flex;align-items:center;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.62)" data-rv>
+      <span style="width:34px;height:1px;background:rgba(246,247,250,.4)"></span>Sesión automotriz · Costa Rica
+    </div>
+  </div>
+
+  <div style="position:relative;display:flex;flex-direction:column;justify-content:center;padding:132px clamp(40px,5vw,86px) 64px;background:#000">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:28px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase" data-rv>
+      <span style="display:flex;align-items:center;gap:12px;color:var(--w,oklch(0.62 0.17 258));white-space:nowrap;min-width:0"><span style="width:5px;height:5px;border-radius:50%;background:var(--w,oklch(0.62 0.17 258));flex:none"></span>Fotografía · video · contenido</span>
+      <span style="color:rgba(246,247,250,.3);white-space:nowrap;flex:none">01 / Portafolio</span>
+    </div>
+    <h1 style="margin:26px 0 0;font-size:clamp(52px,7.4vw,116px);line-height:.86;font-weight:700;letter-spacing:-.045em;text-transform:uppercase">
+      <span style="display:block" data-rv>Imágenes</span>
+      <span style="display:block;font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:-.01em;font-size:1.08em;line-height:.94;color:var(--w,oklch(0.62 0.17 258))" data-rv>que hablan</span>
+    </h1>
+    <p style="margin:38px 0 0;max-width:400px;font-size:16px;line-height:1.6;color:rgba(246,247,250,.62);text-wrap:pretty" data-rv>Fotografía, video vertical y contenido mensual para negocios y marcas personales. Historias reales, imágenes cuidadas.</p>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:40px" data-rv>
+      <a href="#categorias" style="display:flex;align-items:center;gap:12px;padding:16px 26px;border:1px solid var(--w,oklch(0.62 0.17 258));color:var(--w,oklch(0.62 0.17 258));font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;border-radius:2px;transition:background .4s ease,color .4s ease" style-hover="background:var(--w,oklch(0.62 0.17 258));color:#000">Ver el trabajo
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px">↓</span></a>
+      <a href="#contacto" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.55);white-space:nowrap;border-bottom:1px solid rgba(246,247,250,.22);padding-bottom:6px;transition:color .35s,border-color .35s" style-hover="color:#f6f7fa;border-color:var(--w,oklch(0.62 0.17 258))">Trabajemos juntos</a>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:auto;padding-top:56px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.34)" data-rv>
+      <div style="display:flex;gap:26px"><span>Gastronomía</span><span>Automotriz</span><span>Espacios</span></div>
+      <span>MMXXVI</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:22px;left:calc(51% - 1px);z-index:8;width:1px;height:34px;background:linear-gradient(to bottom,var(--w,oklch(0.62 0.17 258)),transparent);animation:cue 2.6s ease-in-out infinite"></div>
+</section>
+
+<div style="position:relative;z-index:5;border-top:1px solid rgba(246,247,250,.09);border-bottom:1px solid rgba(246,247,250,.09);background:#000;overflow:hidden;padding:15px 0">
+  <div style="display:flex;width:max-content;animation:ticker 34s linear infinite;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(246,247,250,.3)">
+    <span style="padding-right:38px">Fotografía</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Reels</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Edición</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Dirección creativa</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Contenido mensual</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span>
+    <span style="padding-right:38px">Fotografía</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Reels</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Edición</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Dirección creativa</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span><span style="padding-right:38px">Contenido mensual</span><span style="padding-right:38px;color:var(--a,oklch(0.56 0.17 258))">·</span>
+  </div>
+</div>
+
+<section id="perfil" data-screen-label="Quién soy" style="position:relative;padding:168px 56px 150px;background:#000">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>02 — Quién soy</span><span>Ian Solís</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 380px;gap:78px;padding-top:74px;align-items:start">
+      <div>
+        <h2 style="margin:0;font-size:clamp(38px,4.9vw,74px);line-height:1.02;font-weight:500;letter-spacing:-.032em;max-width:16ch;text-wrap:pretty" data-rv>Contenido con
+          <span style="font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:500;letter-spacing:-.005em">intención</span>, no solo imágenes bonitas.</h2>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:44px 64px;margin-top:78px;max-width:760px">
+          <div data-rv>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--a,oklch(0.66 0.16 258));padding-bottom:14px;border-top:1px solid rgba(246,247,250,.12);padding-top:14px">01 / QUIÉN</div>
+            <p style="margin:0;font-size:15.5px;line-height:1.62;color:rgba(246,247,250,.62);text-wrap:pretty">Creador audiovisual enfocado en fotografía, reels y contenido para negocios. Trabajo desde Costa Rica con marcas que quieren verse profesionales sin perder cercanía.</p>
+          </div>
+          <div data-rv>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--a,oklch(0.66 0.16 258));padding-bottom:14px;border-top:1px solid rgba(246,247,250,.12);padding-top:14px">02 / CÓMO</div>
+            <p style="margin:0;font-size:15.5px;line-height:1.62;color:rgba(246,247,250,.62);text-wrap:pretty">Transformo ideas en piezas que se sienten reales: dirección, captura y edición en un mismo flujo, con una mirada cercana y auténtica.</p>
+          </div>
+          <div data-rv>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--a,oklch(0.66 0.16 258));padding-bottom:14px;border-top:1px solid rgba(246,247,250,.12);padding-top:14px">03 / PARA QUIÉN</div>
+            <p style="margin:0;font-size:15.5px;line-height:1.62;color:rgba(246,247,250,.62);text-wrap:pretty">Restaurantes, cafeterías, tiendas y marcas que necesitan una presencia visual coherente mes a mes, no fotos aisladas.</p>
+          </div>
+          <div data-rv>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--a,oklch(0.66 0.16 258));padding-bottom:14px;border-top:1px solid rgba(246,247,250,.12);padding-top:14px">04 / DÓNDE</div>
+            <p style="margin:0;font-size:15.5px;line-height:1.62;color:rgba(246,247,250,.62);text-wrap:pretty">Costa Rica. Producción en locación, estudio o espacios de la marca; traslados fuera de la zona acordada se cotizan aparte.</p>
+          </div>
+        </div>
+      </div>
+      <div style="position:relative" data-par="0.06" data-rv>
+        <img src="img/food-2.jpg" alt="Preparación en cocina" style="display:block;width:100%;height:520px;object-fit:cover;object-position:50% 50%;filter:contrast(1.05)">
+        <div style="position:absolute;bottom:-1px;left:-1px;right:-1px;padding:20px 18px 16px;background:linear-gradient(to top,rgba(0,0,0,.94),rgba(0,0,0,0));font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.6);display:flex;justify-content:space-between">
+          <span>Cocina en proceso</span><span style="color:var(--a,oklch(0.66 0.16 258))">CR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="especialidades" style="position:relative;background:#000;border-top:1px solid rgba(246,247,250,.09);padding:150px 56px 160px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>03 — Especialidades</span><span>Cuatro disciplinas, un mismo flujo</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1.25fr .75fr;gap:72px;padding-top:64px;align-items:start">
+      <div>
+        <sc-for list="{{ specs }}" as="s" hint-placeholder-count="4">
+          <div onMouseEnter="{{ s.enter }}" onClick="{{ s.enter }}" data-spec-row style="position:relative;display:flex;align-items:baseline;gap:26px;padding:30px 0;border-bottom:1px solid rgba(246,247,250,.1);cursor:pointer;opacity:1;transition:opacity .5s ease">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--a,oklch(0.66 0.16 258));width:32px;flex:none">{{ s.num }}</span>
+            <span style="font-size:clamp(30px,4.2vw,62px);line-height:.98;font-weight:500;letter-spacing:-.028em;text-transform:uppercase;transition:transform .6s cubic-bezier(.16,1,.3,1)" data-spec-name>{{ s.name }}</span>
+            <span style="margin-left:auto;max-width:250px;font-size:13.5px;line-height:1.55;color:rgba(246,247,250,.5);text-align:right;text-wrap:pretty">{{ s.desc }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position:sticky;top:120px;aspect-ratio:3/4;overflow:hidden;background:#0b0b0b">
+        <img src="img/food-1.jpg" alt="Fotografía" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;transition:opacity .8s ease,transform 1.4s cubic-bezier(.16,1,.3,1)" data-spec-img>
+        <img src="img/auto-2.jpg" alt="Video vertical" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;transition:opacity .8s ease,transform 1.4s cubic-bezier(.16,1,.3,1)" data-spec-img>
+        <img src="img/food-5.jpg" alt="Edición" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease,transform 1.4s cubic-bezier(.16,1,.3,1)" data-spec-img>
+        <img src="img/services-a.jpg" alt="Dirección creativa" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;opacity:0;transition:opacity .8s ease,transform 1.4s cubic-bezier(.16,1,.3,1)" data-spec-img>
+        <div style="position:absolute;inset:auto 0 0 0;padding:22px 20px;background:linear-gradient(to top,rgba(0,0,0,.9),transparent);display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.66)">
+          <span>{{ specLabel }}</span><span style="color:var(--a,oklch(0.66 0.16 258))">{{ specNum }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="categorias" data-screen-label="Categorías" style="position:relative;background:#000;padding:150px 56px 150px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>04 — Categorías</span><span>{{ catCount }}</span>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:56px;padding-top:64px" data-rv>
+      <h2 style="margin:0;font-size:clamp(36px,5.4vw,84px);line-height:.94;font-weight:600;letter-spacing:-.042em;text-transform:uppercase">El trabajo,<br><span style="font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:-.01em;color:var(--w,oklch(0.62 0.17 258))">por categoría</span></h2>
+      <p style="margin:0;max-width:300px;font-size:14.5px;line-height:1.6;color:rgba(246,247,250,.5);text-wrap:pretty">Sin nombres de marca: cada categoría agrupa las piezas por tipo de trabajo y abre su propia galería.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:44px" data-rv>
+        <span onClick="{{ chip0 }}" data-chip style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 15px;border:1px solid rgba(246,247,250,.16);color:rgba(246,247,250,.6);cursor:pointer;transition:border-color .35s,color .35s,background .35s;background:transparent">Todo</span>
+        <span onClick="{{ chip1 }}" data-chip style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 15px;border:1px solid rgba(246,247,250,.16);color:rgba(246,247,250,.6);cursor:pointer;transition:border-color .35s,color .35s,background .35s;background:transparent">Gastronomía</span>
+        <span onClick="{{ chip2 }}" data-chip style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 15px;border:1px solid rgba(246,247,250,.16);color:rgba(246,247,250,.6);cursor:pointer;transition:border-color .35s,color .35s,background .35s;background:transparent">Espacios</span>
+        <span onClick="{{ chip3 }}" data-chip style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 15px;border:1px solid rgba(246,247,250,.16);color:rgba(246,247,250,.6);cursor:pointer;transition:border-color .35s,color .35s,background .35s;background:transparent">Automotriz</span>
+        <span onClick="{{ chip4 }}" data-chip style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 15px;border:1px solid rgba(246,247,250,.16);color:rgba(246,247,250,.6);cursor:pointer;transition:border-color .35s,color .35s,background .35s;background:transparent">Detrás</span>
+        <span onClick="{{ chip5 }}" data-chip style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 15px;border:1px solid rgba(246,247,250,.16);color:rgba(246,247,250,.6);cursor:pointer;transition:border-color .35s,color .35s,background .35s;background:transparent">Contenido</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:24px 24px;margin-top:38px">
+      <div data-cat style="grid-column:span 2;transition:opacity .55s ease;cursor:pointer" data-rv>
+        <div style="position:relative;overflow:hidden;height:440px;background:#0b0b0b">
+          <img src="img/food-4.jpg" alt="Gastronomía" style="width:100%;height:100%;object-fit:cover;object-position:50% 46%;transition:transform 1.2s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.05)">
+          <div style="position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);pointer-events:none"></div>
+          <span style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:var(--w,oklch(0.62 0.17 258))">01</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:16px;margin-top:16px;border-top:1px solid rgba(255,255,255,.1)">
+          <span style="font-size:24px;font-weight:600;letter-spacing:-.024em;line-height:1.06">Gastronomía</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.42);text-align:right">Plato, mesa y detalle</span>
+        </div>
+      </div>
+      <div data-cat style="grid-column:span 2;transition:opacity .55s ease;cursor:pointer" data-rv>
+        <div style="position:relative;overflow:hidden;height:440px;background:#0b0b0b">
+          <img src="img/edit-after.jpg" alt="Espacios" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:transform 1.2s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.05)">
+          <div style="position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);pointer-events:none"></div>
+          <span style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:var(--w,oklch(0.62 0.17 258))">02</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:16px;margin-top:16px;border-top:1px solid rgba(255,255,255,.1)">
+          <span style="font-size:24px;font-weight:600;letter-spacing:-.024em;line-height:1.06">Espacios</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.42);text-align:right">Ambientes y locales</span>
+        </div>
+      </div>
+      <div data-cat style="grid-column:span 2;transition:opacity .55s ease;cursor:pointer" data-rv>
+        <div style="position:relative;overflow:hidden;height:440px;background:#0b0b0b">
+          <img src="img/auto-1.jpg" alt="Automotriz" style="width:100%;height:100%;object-fit:cover;object-position:52% 50%;transition:transform 1.2s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.05)">
+          <div style="position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);pointer-events:none"></div>
+          <span style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:var(--w,oklch(0.62 0.17 258))">03</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:16px;margin-top:16px;border-top:1px solid rgba(255,255,255,.1)">
+          <span style="font-size:24px;font-weight:600;letter-spacing:-.024em;line-height:1.06">Automotriz</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.42);text-align:right">Detalle y movimiento</span>
+        </div>
+      </div>
+      <div data-cat style="grid-column:span 3;transition:opacity .55s ease;cursor:pointer" data-rv>
+        <div style="position:relative;overflow:hidden;height:440px;background:#0b0b0b">
+          <img src="img/services-a.jpg" alt="Detrás de cámara" style="width:100%;height:100%;object-fit:cover;object-position:50% 46%;transition:transform 1.2s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.05)">
+          <div style="position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);pointer-events:none"></div>
+          <span style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:var(--w,oklch(0.62 0.17 258))">04</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:16px;margin-top:16px;border-top:1px solid rgba(255,255,255,.1)">
+          <span style="font-size:24px;font-weight:600;letter-spacing:-.024em;line-height:1.06">Detrás de cámara</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.42);text-align:right">Proceso, equipo y set</span>
+        </div>
+      </div>
+      <div data-cat style="grid-column:span 3;transition:opacity .55s ease;cursor:pointer" data-rv>
+        <div style="position:relative;overflow:hidden;height:440px;background:#0b0b0b">
+          <img src="img/food-3.jpg" alt="Contenido mensual" style="width:100%;height:100%;object-fit:cover;object-position:50% 48%;transition:transform 1.2s cubic-bezier(.16,1,.3,1)" style-hover="transform:scale(1.05)">
+          <div style="position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);pointer-events:none"></div>
+          <span style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:var(--w,oklch(0.62 0.17 258))">05</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:16px;margin-top:16px;border-top:1px solid rgba(255,255,255,.1)">
+          <span style="font-size:24px;font-weight:600;letter-spacing:-.024em;line-height:1.06">Contenido mensual</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.42);text-align:right">Set completo del mes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vertical" data-screen-label="Contenido vertical" style="position:relative;background:#000;border-top:1px solid rgba(246,247,250,.09);padding:150px 0 140px;overflow:hidden">
+  <div style="max-width:1440px;margin:0 auto;padding:0 56px">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>05 — Contenido vertical</span><span>9:16 · reels &amp; historias</span>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:56px;padding-top:64px" data-rv>
+      <h2 style="margin:0;font-size:clamp(34px,5vw,76px);line-height:.96;font-weight:600;letter-spacing:-.04em;text-transform:uppercase">Pensado<br><span style="font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:-.01em;color:var(--w,oklch(0.62 0.17 258))">para vertical</span></h2>
+      <div style="display:flex;align-items:center;gap:14px;padding-bottom:10px">
+        <span onClick="{{ prev }}" style="width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(246,247,250,.2);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:14px;color:rgba(246,247,250,.7);transition:border-color .35s,color .35s" style-hover="border-color:var(--w,oklch(0.62 0.17 258));color:#f6f7fa">‹</span>
+        <span onClick="{{ next }}" style="width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(246,247,250,.2);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:14px;color:rgba(246,247,250,.7);transition:border-color .35s,color .35s" style-hover="border-color:var(--w,oklch(0.62 0.17 258));color:#f6f7fa">›</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:rgba(246,247,250,.45);padding-left:8px">{{ slideLabel }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;overflow:hidden">
+    <div data-vtrack style="display:flex;gap:24px;width:max-content;transition:transform .85s cubic-bezier(.16,1,.3,1)">
+      <div data-vslide style="width:300px;flex:none;opacity:1;transform-origin:50% 50%;transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)">
+        <div style="position:relative;aspect-ratio:9/16;overflow:hidden;background:#0b0b0b">
+          <img src="img/auto-2.jpg" alt="Fotograma de reel — automotriz" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%">
+          <span style="position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)">Reel 01</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:14px;margin-top:14px;border-top:1px solid rgba(246,247,250,.12);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.45)"><span>Automotriz</span><span>0:18</span></div>
+      </div>
+      <div data-vslide style="width:300px;flex:none;opacity:0.34;transform-origin:50% 50%;transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)">
+        <div style="position:relative;aspect-ratio:9/16;overflow:hidden;background:#0b0b0b">
+          <img src="img/food-5.jpg" alt="Fotograma de reel — gastronomía" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%">
+          <span style="position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)">Reel 02</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:14px;margin-top:14px;border-top:1px solid rgba(246,247,250,.12);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.45)"><span>Gastronomía</span><span>0:24</span></div>
+      </div>
+      <div data-vslide style="width:300px;flex:none;opacity:0.34;transform-origin:50% 50%;transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)">
+        <div style="position:relative;aspect-ratio:9/16;overflow:hidden;background:#0b0b0b">
+          <img src="img/food-1.jpg" alt="Fotograma de reel — mesa" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%">
+          <span style="position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)">Reel 03</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:14px;margin-top:14px;border-top:1px solid rgba(246,247,250,.12);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.45)"><span>Mesa</span><span>0:15</span></div>
+      </div>
+      <div data-vslide style="width:300px;flex:none;opacity:0.34;transform-origin:50% 50%;transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)">
+        <div style="position:relative;aspect-ratio:9/16;overflow:hidden;background:#0b0b0b">
+          <img src="img/food-3.jpg" alt="Fotograma de reel — producto" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%">
+          <span style="position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)">Reel 04</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:14px;margin-top:14px;border-top:1px solid rgba(246,247,250,.12);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.45)"><span>Producto</span><span>0:21</span></div>
+      </div>
+      <div data-vslide style="width:300px;flex:none;opacity:0.34;transform-origin:50% 50%;transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)">
+        <div style="position:relative;aspect-ratio:9/16;overflow:hidden;background:#0b0b0b">
+          <img src="img/suburban-4.jpg" alt="Fotograma de reel — detalle" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%">
+          <span style="position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)">Reel 05</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:14px;margin-top:14px;border-top:1px solid rgba(246,247,250,.12);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.45)"><span>Detalle</span><span>0:12</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1440px;margin:0 auto;padding:44px 56px 0;display:flex;align-items:center;justify-content:space-between;gap:40px">
+    <div style="display:flex;gap:8px">
+      <span onClick="{{ go0 }}" data-vdot style="width:34px;height:2px;background:rgba(246,247,250,.18);cursor:pointer;transition:background .4s"></span>
+      <span onClick="{{ go1 }}" data-vdot style="width:34px;height:2px;background:rgba(246,247,250,.18);cursor:pointer;transition:background .4s"></span>
+      <span onClick="{{ go2 }}" data-vdot style="width:34px;height:2px;background:rgba(246,247,250,.18);cursor:pointer;transition:background .4s"></span>
+      <span onClick="{{ go3 }}" data-vdot style="width:34px;height:2px;background:rgba(246,247,250,.18);cursor:pointer;transition:background .4s"></span>
+      <span onClick="{{ go4 }}" data-vdot style="width:34px;height:2px;background:rgba(246,247,250,.18);cursor:pointer;transition:background .4s"></span>
+    </div>
+    <p style="margin:0;max-width:420px;font-size:14px;line-height:1.6;color:rgba(246,247,250,.45);text-wrap:pretty">Cada pieza se graba y edita en 9:16 desde el guion — no es un horizontal recortado. Duración objetivo: 15–25 s.</p>
+  </div>
+</section>
+
+<section id="suburban" style="position:relative;background:#000;border-top:1px solid rgba(246,247,250,.09);padding:132px 0 0;overflow:hidden">
+  <div style="position:absolute;top:180px;left:0;right:0;text-align:center;font-size:clamp(90px,17vw,290px);line-height:.78;font-weight:700;letter-spacing:-.055em;color:rgba(246,247,250,.05);text-transform:uppercase;pointer-events:none;white-space:nowrap" data-par="-0.08">AUTOMOTRIZ</div>
+  <div style="position:relative;max-width:1440px;margin:0 auto;padding:0 56px">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span style="color:var(--w,oklch(0.62 0.17 258))">06 — Serie destacada</span><span>Fotografía automotriz</span>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:56px;padding-top:70px" data-rv>
+      <h2 style="margin:0;font-size:clamp(44px,7.6vw,124px);line-height:.86;font-weight:700;letter-spacing:-.05em;text-transform:uppercase">Metal<br><span style="font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:-.01em;color:var(--w,oklch(0.62 0.17 258))">en movimiento</span></h2>
+      <div style="display:flex;gap:34px;padding-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.42)">
+        <span>Velocidad</span><span>Precisión</span><span>Detalle</span><span>Movimiento</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;margin-top:64px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-bottom:10px">
+    <div style="display:flex;gap:20px;width:max-content;padding:0 56px">
+      <figure style="margin:0;width:820px;flex:none;position:relative;overflow:hidden">
+        <img src="img/auto-1.jpg" alt="Serie automotriz" style="display:block;width:100%;height:520px;object-fit:cover;object-position:50% 52%">
+        <figcaption style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.8);padding:6px 10px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)">01 / Pit lane</figcaption>
+      </figure>
+      <figure style="margin:0;width:340px;flex:none;position:relative;overflow:hidden">
+        <img src="img/auto-2.jpg" alt="Detalle frontal" style="display:block;width:100%;height:520px;object-fit:cover;object-position:50% 40%;transform:scale(1.8);transform-origin:50% 38%">
+        <figcaption style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.8);padding:6px 10px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)">02 / Crop extremo</figcaption>
+      </figure>
+      <figure style="margin:0;width:640px;flex:none;position:relative;overflow:hidden">
+        <img src="img/suburban-1.jpg" alt="Frontal" style="display:block;width:100%;height:520px;object-fit:cover;object-position:50% 48%">
+        <figcaption style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.8);padding:6px 10px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)">03 / Frontal</figcaption>
+      </figure>
+      <figure style="margin:0;width:392px;flex:none;position:relative;overflow:hidden">
+        <img src="img/suburban-3.jpg" alt="Hypercar" style="display:block;width:100%;height:520px;object-fit:cover">
+        <figcaption style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.8);padding:6px 10px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)">04 / Grid</figcaption>
+      </figure>
+      <figure style="margin:0;width:392px;flex:none;position:relative;overflow:hidden">
+        <img src="img/suburban-2.jpg" alt="Encuentro" style="display:block;width:100%;height:520px;object-fit:cover;object-position:50% 52%">
+        <figcaption style="position:absolute;top:18px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.8);padding:6px 10px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)">05 / Color</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div style="max-width:1440px;margin:0 auto;padding:60px 56px 130px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:56px;border-top:1px solid rgba(246,247,250,.09);margin-top:56px">
+    <p style="margin:0;grid-column:span 2;max-width:640px;font-size:19px;line-height:1.55;color:rgba(246,247,250,.68);text-wrap:pretty" data-rv>Cobertura de encuentros y sesiones automotrices: luz dura, crops cerrados y control de reflejos. El proyecto donde el detalle mecánico manda sobre la composición.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,247,250,.42)" data-rv>
+      <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(246,247,250,.09);padding-bottom:10px"><span>Rol</span><span style="color:#f6f7fa">Foto · edición</span></div>
+      <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(246,247,250,.09);padding-bottom:10px"><span>Locación</span><span style="color:#f6f7fa">Costa Rica</span></div>
+      <div style="display:flex;justify-content:space-between"><span>Año</span><span style="color:#f6f7fa">2026</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="edicion" style="position:relative;background:#000;border-top:1px solid rgba(246,247,250,.09);padding:150px 56px 160px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>07 — Edición</span><span>Antes / Después</span>
+    </div>
+    <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;padding-top:74px;align-items:center">
+      <div>
+        <h2 style="margin:0;font-size:clamp(34px,4.4vw,66px);line-height:1.02;font-weight:500;letter-spacing:-.03em;max-width:14ch;text-wrap:pretty" data-rv>La edición es<br><span style="font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-weight:500">la mitad</span> del trabajo.</h2>
+        <p style="margin:30px 0 0;max-width:400px;font-size:15.5px;line-height:1.62;color:rgba(246,247,250,.6);text-wrap:pretty" data-rv>Corrección de color, limpieza de escena y control de luz. Arrastra el control para comparar el archivo original con la entrega final.</p>
+        <div style="display:flex;gap:40px;margin-top:44px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.42)" data-rv>
+          <div style="display:flex;flex-direction:column;gap:8px"><span>Color</span><span style="color:#f6f7fa">Cálido / neutro</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><span>Entrega</span><span style="color:#f6f7fa">7 días hábiles</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><span>Ajustes</span><span style="color:#f6f7fa">1 ronda incluida</span></div>
+        </div>
+      </div>
+      <div onPointerDown="{{ baDown }}" onPointerMove="{{ baMove }}" onPointerUp="{{ baUp }}" onPointerLeave="{{ baUp }}" ref="{{ baRef }}" style="position:relative;aspect-ratio:4/5;overflow:hidden;cursor:ew-resize;touch-action:none;user-select:none;background:#0b0b0b" data-rv>
+        <img src="img/edit-after.jpg" alt="Después" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
+        <img src="img/edit-before.jpg" alt="Antes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;clip-path:inset(0 50% 0 0)" data-ba-before>
+        <div data-ba-handle style="position:absolute;top:0;bottom:0;width:1px;background:rgba(246,247,250,.9);pointer-events:none;left:50%">
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(246,247,250,.85);background:rgba(0,0,0,.35);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;gap:6px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#f6f7fa">‹</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#f6f7fa">›</span>
+          </div>
+        </div>
+        <span style="position:absolute;top:16px;left:16px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.85);padding:6px 10px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);pointer-events:none">Antes</span>
+        <span style="position:absolute;top:16px;right:16px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#000;padding:6px 10px;background:var(--a,oklch(0.58 0.18 258));pointer-events:none">Después</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" style="position:relative;background:#000;padding:150px 56px 160px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>08 — Servicios</span><span>Una presencia visual coherente</span>
+    </div>
+    <div style="display:grid;grid-template-columns:.82fr 1.18fr;gap:78px;padding-top:70px;align-items:start">
+      <div style="position:sticky;top:118px" data-rv>
+        <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#0b0b0b">
+          <img src="img/food-3.jpg" alt="Producto y espacios" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;transition:opacity .8s ease" data-svc-img>
+          <img src="img/food-4.jpg" alt="Gastronomía y mesa" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;transition:opacity .8s ease" data-svc-img>
+          <img src="img/auto-2.jpg" alt="Video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease" data-svc-img>
+          <img src="img/food-1.jpg" alt="Contenido mensual" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease" data-svc-img>
+        </div>
+        <p style="margin:20px 0 0;font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.8;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,247,250,.36)">Cada proyecto se adapta según cantidad de piezas, locación, frecuencia y objetivos de la marca.</p>
+      </div>
+      <div>
+        <sc-for list="{{ services }}" as="v" hint-placeholder-count="4">
+          <div onClick="{{ v.open }}" onMouseEnter="{{ v.hover }}" data-svc-row style="border-bottom:1px solid rgba(246,247,250,.11);padding:34px 0;cursor:pointer">
+            <div style="display:flex;align-items:baseline;gap:24px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">{{ v.num }}</span>
+              <h3 style="margin:0;font-size:clamp(22px,2.5vw,34px);line-height:1.1;font-weight:500;letter-spacing:-.022em;flex:1">{{ v.name }}</h3>
+              <span data-svc-plus style="font-family:'IBM Plex Mono',monospace;font-size:18px;color:rgba(246,247,250,.4);transition:transform .55s cubic-bezier(.16,1,.3,1)">+</span>
+            </div>
+            <div data-svc-panel style="overflow:hidden;max-height:0px;opacity:0;transition:max-height .65s cubic-bezier(.16,1,.3,1),opacity .5s ease">
+              <p style="margin:18px 0 0 54px;max-width:520px;font-size:15.5px;line-height:1.62;color:rgba(246,247,250,.6);text-wrap:pretty">{{ v.desc }}</p>
+              <div style="margin:16px 0 6px 54px;display:flex;gap:10px;flex-wrap:wrap">
+                <sc-for list="{{ v.tags }}" as="t" hint-placeholder-count="3">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,247,250,.5);border:1px solid rgba(246,247,250,.14);padding:7px 11px">{{ t }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="planes" style="position:relative;background:#000;border-top:1px solid rgba(246,247,250,.09);padding:150px 56px 150px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>09 — Planes mensuales</span><span>Precios en USD · Julio 2026</span>
+    </div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:56px;padding-top:70px" data-rv>
+      <h2 style="margin:0;font-size:clamp(34px,4.6vw,70px);line-height:1;font-weight:500;letter-spacing:-.032em;max-width:20ch;text-wrap:pretty">Elige el nivel de producción que necesita la marca.</h2>
+      <p style="margin:0;max-width:290px;font-size:14.5px;line-height:1.6;color:rgba(246,247,250,.5);text-wrap:pretty">Fotografía de producto, reels y piezas listas para publicar. Los alcances pueden ajustarse según inventario, ubicación y frecuencia.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:74px;border-top:1px solid rgba(246,247,250,.14)">
+      <div onMouseEnter="{{ p0enter }}" style="position:relative;padding:38px 34px 40px;border-right:1px solid rgba(246,247,250,.1);background:transparent;transition:background .5s ease" data-plan data-rv>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(246,247,250,.55)">Básico</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(246,247,250,.3)">01</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:34px">
+          <span style="font-size:60px;font-weight:600;letter-spacing:-.045em;line-height:.9">$175</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,247,250,.4)">USD / mes</span>
+        </div>
+        <div style="margin-top:38px;display:flex;flex-direction:column">
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">1 sesión mensual de hasta 2 horas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">12 fotografías editadas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">3 reels verticales</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">8 piezas para historias</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">Plan básico de ideas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">1 escenario o ubicación</span>
+        </div>
+        <a href="#contacto" style="display:inline-block;margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.6);border-bottom:1px solid rgba(246,247,250,.25);padding-bottom:6px;transition:color .35s,border-color .35s" style-hover="color:#f6f7fa;border-color:var(--a,oklch(0.58 0.18 258))">Reservar básico →</a>
+      </div>
+
+      <div onMouseEnter="{{ p1enter }}" style="position:relative;padding:38px 34px 40px;border-right:1px solid rgba(246,247,250,.1);background:rgba(255,255,255,.05);transition:background .5s ease" data-plan data-rv>
+        <div style="position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--a,oklch(0.58 0.18 258));box-shadow:0 0 22px var(--a,oklch(0.58 0.18 258))"></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#f6f7fa">Avanzado</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--a,oklch(0.68 0.15 258))">Recomendado</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:34px">
+          <span style="font-size:60px;font-weight:600;letter-spacing:-.045em;line-height:.9">$295</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,247,250,.45)">USD / mes</span>
+        </div>
+        <div style="margin-top:38px;display:flex;flex-direction:column">
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.88);padding:11px 0;border-top:1px solid rgba(246,247,250,.1)">1 sesión mensual de hasta 3 horas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.88);padding:11px 0;border-top:1px solid rgba(246,247,250,.1)">24 fotografías editadas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.88);padding:11px 0;border-top:1px solid rgba(246,247,250,.1)">6 reels verticales</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.88);padding:11px 0;border-top:1px solid rgba(246,247,250,.1)">12 piezas para historias</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.88);padding:11px 0;border-top:1px solid rgba(246,247,250,.1)">Calendario mensual de contenido</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.88);padding:11px 0;border-top:1px solid rgba(246,247,250,.1)">Retoque avanzado en 5 fotografías</span>
+        </div>
+        <a href="#contacto" style="display:inline-flex;align-items:center;gap:10px;margin-top:34px;padding:15px 22px;background:var(--a,oklch(0.58 0.18 258));color:#000;font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;transition:transform .45s cubic-bezier(.16,1,.3,1)" style-hover="transform:translateY(-3px);color:#000">Reservar avanzado →</a>
+      </div>
+
+      <div onMouseEnter="{{ p2enter }}" style="position:relative;padding:38px 34px 40px;background:transparent;transition:background .5s ease" data-plan data-rv>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(246,247,250,.55)">Profesional</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(246,247,250,.3)">03</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:34px">
+          <span style="font-size:60px;font-weight:600;letter-spacing:-.045em;line-height:.9">$450</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,247,250,.4)">USD / mes</span>
+        </div>
+        <div style="margin-top:38px;display:flex;flex-direction:column">
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">2 sesiones mensuales de hasta 3 horas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">40 fotografías editadas</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">10 reels verticales</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">20 piezas para historias</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">Dirección creativa y calendario</span>
+          <span style="font-size:14.5px;line-height:1.5;color:rgba(246,247,250,.72);padding:11px 0;border-top:1px solid rgba(246,247,250,.08)">Retoque avanzado + entrega prioritaria</span>
+        </div>
+        <a href="#contacto" style="display:inline-block;margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.6);border-bottom:1px solid rgba(246,247,250,.25);padding-bottom:6px;transition:color .35s,border-color .35s" style-hover="color:#f6f7fa;border-color:var(--a,oklch(0.58 0.18 258))">Reservar profesional →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:44px;border-top:1px solid rgba(246,247,250,.1);padding-top:26px">
+      <div onClick="{{ toggleCmp }}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.62)" style-hover="color:#f6f7fa">
+        <span>{{ cmpLabel }}</span>
+        <span data-cmp-plus style="font-size:16px;transition:transform .5s cubic-bezier(.16,1,.3,1)">+</span>
+      </div>
+      <div data-cmp-panel style="overflow:hidden;max-height:0px;opacity:0;transition:max-height .8s cubic-bezier(.16,1,.3,1),opacity .5s ease">
+        <div style="padding-top:34px">
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:0;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,247,250,.4);border-bottom:1px solid rgba(246,247,250,.14);padding-bottom:12px">
+            <span>Alcance</span><span>Básico</span><span style="color:var(--a,oklch(0.66 0.16 258))">Avanzado</span><span>Profesional</span>
+          </div>
+          <sc-for list="{{ cmpRows }}" as="r" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:0;padding:15px 0;border-bottom:1px solid rgba(246,247,250,.07);font-size:14px;color:rgba(246,247,250,.66)">
+              <span style="color:rgba(246,247,250,.44)">{{ r.k }}</span><span>{{ r.a }}</span><span style="color:#f6f7fa">{{ r.b }}</span><span>{{ r.c }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="extras" style="position:relative;background:#000;padding:130px 56px 140px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.36);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.09)" data-rv>
+      <span>10 — Extras</span><span>Personaliza el alcance</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1.35fr .65fr;gap:80px;padding-top:64px;align-items:start">
+      <div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 0;border-bottom:1px solid rgba(246,247,250,.1)" style-hover="background:rgba(255,255,255,.02)" data-rv>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">01</span>
+          <span style="font-size:19px;font-weight:400;flex:1">Reel adicional</span>
+          <span style="font-size:19px;font-weight:600;letter-spacing:-.01em">$35</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 0;border-bottom:1px solid rgba(246,247,250,.1)" data-rv>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">02</span>
+          <span style="font-size:19px;font-weight:400;flex:1">Paquete de 10 fotografías</span>
+          <span style="font-size:19px;font-weight:600;letter-spacing:-.01em">$45</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 0;border-bottom:1px solid rgba(246,247,250,.1)" data-rv>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">03</span>
+          <span style="font-size:19px;font-weight:400;flex:1">Hora adicional de producción</span>
+          <span style="font-size:19px;font-weight:600;letter-spacing:-.01em">$30</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 0;border-bottom:1px solid rgba(246,247,250,.1)" data-rv>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">04</span>
+          <span style="font-size:19px;font-weight:400;flex:1">Publicación y manejo mensual</span>
+          <span style="font-size:19px;font-weight:600;letter-spacing:-.01em">Desde $90</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 0;border-bottom:1px solid rgba(246,247,250,.1)" data-rv>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">05</span>
+          <span style="font-size:19px;font-weight:400;flex:1">Sitio web tipo catálogo</span>
+          <span style="font-size:19px;font-weight:600;letter-spacing:-.01em">Desde $420</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 0;border-bottom:1px solid rgba(246,247,250,.1)" data-rv>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--a,oklch(0.66 0.16 258));width:30px;flex:none">06</span>
+          <span style="font-size:19px;font-weight:400;flex:1">Ubicación adicional</span>
+          <span style="font-size:19px;font-weight:600;letter-spacing:-.01em">Desde $25</span>
+        </div>
+      </div>
+      <div data-rv>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.4);padding-bottom:18px;border-bottom:1px solid rgba(246,247,250,.12)">Condiciones</div>
+        <div style="display:flex;flex-direction:column;gap:13px;padding-top:18px;font-size:13.5px;line-height:1.55;color:rgba(246,247,250,.55)">
+          <span>Servicio y precios mensuales en USD.</span>
+          <span>Se reserva con el 50% del total.</span>
+          <span>Incluye una ronda de ajustes menores.</span>
+          <span>Entrega estimada: 7 días hábiles.</span>
+          <span>Traslados fuera de la zona acordada se cotizan por separado.</span>
+          <span>El pago puede realizarse en colones al tipo de cambio del día.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" style="position:relative;overflow:hidden;background:#000;border-top:1px solid rgba(246,247,250,.09);padding:150px 56px 0">
+  <div style="position:absolute;inset:-20% -10% auto -10%;height:120%;z-index:0">
+    <img src="img/auto-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 55%;opacity:.32;transform:scale(1.1);filter:saturate(.9) contrast(1.05)">
+  </div>
+  <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(110% 80% at 30% 70%,rgba(0,0,0,.2),rgba(0,0,0,.92) 70%)"></div>
+  <div style="position:relative;z-index:2;max-width:1440px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.4);padding-bottom:34px;border-bottom:1px solid rgba(246,247,250,.1)" data-rv>
+      <span style="color:var(--w,oklch(0.62 0.17 258))">11 — Hablemos</span><span>Disponible para 2026</span>
+    </div>
+    <h2 style="margin:78px 0 0;font-size:clamp(42px,7.8vw,128px);line-height:.88;font-weight:600;letter-spacing:-.05em;text-transform:uppercase" data-rv>Tu próxima idea<br><span style="color:rgba(246,247,250,.4)">puede empezar aquí.</span></h2>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:64px;margin-top:82px;flex-wrap:wrap" data-rv>
+      <div style="display:flex;gap:64px">
+        <a href="https://wa.me/50687837575" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.42)">WhatsApp</span>
+          <span style="font-size:27px;font-weight:500;letter-spacing:-.02em;border-bottom:1px solid rgba(246,247,250,.2);padding-bottom:8px;transition:border-color .4s" style-hover="border-color:var(--a,oklch(0.58 0.18 258))">+506 8783-7575</span>
+        </a>
+        <a href="mailto:iansolisv@gmail.com" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.42)">Correo</span>
+          <span style="font-size:27px;font-weight:500;letter-spacing:-.02em;border-bottom:1px solid rgba(246,247,250,.2);padding-bottom:8px;transition:border-color .4s" style-hover="border-color:var(--a,oklch(0.58 0.18 258))">iansolisv@gmail.com</span>
+        </a>
+      </div>
+      <a href="https://wa.me/50687837575" style="display:flex;align-items:center;gap:14px;padding:20px 32px;background:#f6f7fa;color:#000;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border-radius:2px;transition:transform .45s cubic-bezier(.16,1,.3,1)" style-hover="transform:translateY(-4px);color:#000">Crear algo juntos
+        <span style="font-family:'IBM Plex Mono',monospace">↗</span></a>
+    </div>
+    <p style="margin:52px 0 0;max-width:520px;font-size:15.5px;line-height:1.6;color:rgba(246,247,250,.55);text-wrap:pretty" data-rv>Disponible para fotografía, video y contenido mensual para negocios y marcas. Siguiente paso: confirmar plan, fecha y productos.</p>
+    <div style="margin-top:120px;padding:30px 0;border-top:1px solid rgba(246,247,250,.1);display:flex;align-items:flex-end;justify-content:space-between;gap:40px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,247,250,.32)">
+      <div style="display:flex;align-items:center;gap:16px">
+        <img src="img/logo.png" alt="Ian Studio" style="height:46px;width:auto;display:block;flex:none">
+        <div style="display:flex;flex-direction:column;gap:5px;line-height:1">
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:600;letter-spacing:.07em;color:#f6f7fa">IAN STUDIO</span>
+          <span>Fotografía · Video · Contenido</span>
+        </div>
+      </div>
+      <span>Costa Rica / 2026</span>
+    </div>
+  </div>
+</section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;warm&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;oklch(0.62 0.17 258)&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;oklch(0.62 0.17 258)&quot;,&quot;oklch(0.7 0.14 250)&quot;,&quot;oklch(0.52 0.16 262)&quot;,&quot;oklch(0.9 0.02 250)&quot;],&quot;section&quot;:&quot;Dirección de arte&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;oklch(0.58 0.18 258)&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;oklch(0.58 0.18 258)&quot;,&quot;oklch(0.66 0.16 258)&quot;,&quot;oklch(0.48 0.15 262)&quot;,&quot;oklch(0.9 0.02 250)&quot;],&quot;section&quot;:&quot;Dirección de arte&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Dirección de arte&quot;},&quot;reveal&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { spec: 0, svc: 0, ba: 50, plan: 1, cmp: false, prog: '0%', navBg: 'rgba(0,0,0,0)', cat: 0, vi: 0, w: 1440, menu: false };
+
+  componentDidMount() {
+    this.baRef = React.createRef();
+    this.applyVars();
+    this.onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        const y = window.scrollY || 0;
+        this.set({ prog: (h > 0 ? Math.min(100, (y / h) * 100) : 0).toFixed(2) + '%', navBg: y > 60 ? 'rgba(0,0,0,.72)' : 'rgba(0,0,0,0)', w: window.innerWidth });
+        const vh = window.innerHeight;
+        document.querySelectorAll('[data-par]').forEach(el => {
+          const f = parseFloat(el.getAttribute('data-par')) || 0;
+          const r = el.getBoundingClientRect();
+          const d = (r.top + r.height / 2 - vh / 2) / vh;
+          el.style.willChange = 'transform';
+          el.style.transform = 'translate3d(0,' + (d * f * 120).toFixed(1) + 'px,0)';
+        });
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.onScroll();
+    this.setupReveal();
+    this.sync();
+    this.forceUpdate();
+  }
+
+  componentDidUpdate() { this.applyVars(); this.sync(); }
+
+  applyVars() {
+    const r = document.documentElement;
+    r.style.setProperty('--a', this.props.accent || 'oklch(0.58 0.18 258)');
+    r.style.setProperty('--w', this.props.warm || 'oklch(0.62 0.17 258)');
+    r.style.setProperty('--grain', this.props.grain === false ? '0' : '.055');
+  }
+
+  setupReveal() {
+    const els = Array.from(document.querySelectorAll('[data-rv]'));
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    if (this.props.reveal === false) { els.forEach(show); return; }
+    els.forEach(el => {
+      el.style.transition = 'opacity 1s cubic-bezier(.16,1,.3,1), transform 1.15s cubic-bezier(.16,1,.3,1)';
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92) { show(el); return; }
+      el.style.opacity = '0';
+      el.style.transform = 'translate3d(0,34px,0)';
+    });
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => show(e.target), i * 70); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    els.forEach(el => io.observe(el));
+    this._io = io;
+    this._safety = setTimeout(() => els.forEach(show), 4000);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+    if (this._io) this._io.disconnect();
+    clearTimeout(this._safety);
+  }
+
+  // Fuente de verdad para todo lo visual: se muta y se pinta en el mismo tick,
+  // sin depender de cuándo confirme setState (los style holes van un render tarde).
+  ui = { spec: 0, svc: 0, ba: 50, plan: 1, cmp: false, cat: 0, vi: 0, menu: false, prog: '0%', navBg: 'rgba(0,0,0,0)', w: 1440 };
+
+  set = (patch) => {
+    Object.assign(this.ui, typeof patch === 'function' ? patch(this.ui) : patch);
+    this.sync();
+    this.setState(s => Object.assign({}, s, this.ui));
+  };
+
+  // Los style holes del template se resuelven un render tarde, así que todo
+  // lo visual dependiente de estado se escribe directamente sobre el DOM.
+  sync = () => {
+    const S = this.ui, W = 'var(--w,oklch(0.62 0.17 258))';
+    const q = (sel) => Array.from(document.querySelectorAll(sel));
+    const one = (sel) => document.querySelector(sel);
+    const set = (el, prop, val) => { if (el) el.style[prop] = val; };
+
+    set(one('[data-x="prog"]'), 'width', S.prog);
+    set(one('[data-x="nav"]'), 'background', S.navBg);
+    set(one('[data-x="sublabel"]'), 'display', S.w < 1200 ? 'none' : 'block');
+    set(one('[data-x="navsize"]'), 'fontSize', S.w < 1320 ? '9.5px' : '10.5px');
+    set(one('[data-x="navlinks"]'), 'display', S.w < 1120 ? 'none' : 'flex');
+    set(one('[data-x="navburger"]'), 'display', S.w < 1120 ? 'flex' : 'none');
+    set(one('[data-x="menu"]'), 'display', S.menu ? 'flex' : 'none');
+
+    q('[data-spec-row]').forEach((el, i) => {
+      el.style.opacity = S.spec === i ? '1' : '0.34';
+      set(el.querySelector('[data-spec-name]'), 'transform', S.spec === i ? 'translateX(14px)' : 'translateX(0)');
+    });
+    q('[data-spec-img]').forEach((el, i) => {
+      el.style.opacity = S.spec === i ? '1' : '0';
+      el.style.transform = 'scale(' + (S.spec === i ? 1 : 1.07) + ')';
+    });
+
+    q('[data-chip]').forEach((el, k) => {
+      const on = S.cat === k;
+      el.style.borderColor = on ? W : 'rgba(246,247,250,.16)';
+      el.style.color = on ? '#000' : 'rgba(246,247,250,.6)';
+      el.style.background = on ? W : 'transparent';
+    });
+    q('[data-cat]').forEach((el, i) => {
+      const on = S.cat === 0 || S.cat === i + 1;
+      Array.from(el.children).forEach(ch => { ch.style.transition = 'opacity .55s ease'; ch.style.opacity = on ? '1' : '0.16'; });
+    });
+
+    set(one('[data-vtrack]'), 'transform', 'translateX(calc(50vw - 150px - ' + (S.vi * 324) + 'px))');
+    q('[data-vslide]').forEach((el, i) => {
+      el.style.opacity = S.vi === i ? '1' : '0.34';
+      el.style.transform = 'scale(' + (S.vi === i ? 1 : 0.92) + ')';
+    });
+    q('[data-vdot]').forEach((el, i) => { el.style.background = S.vi === i ? W : 'rgba(246,247,250,.18)'; });
+
+    q('[data-svc-row]').forEach((el, i) => {
+      const on = S.svc === i;
+      set(el.querySelector('[data-svc-plus]'), 'transform', on ? 'rotate(45deg)' : 'rotate(0deg)');
+      const panel = el.querySelector('[data-svc-panel]');
+      if (panel) { panel.style.maxHeight = on ? '260px' : '0px'; panel.style.opacity = on ? '1' : '0'; }
+    });
+    q('[data-svc-img]').forEach((el, i) => {
+      el.style.opacity = (S.svc < 0 ? i === 0 : S.svc === i) ? '1' : '0';
+    });
+
+    q('[data-plan]').forEach((el, i) => {
+      el.style.background = S.plan === i ? (i === 1 ? 'rgba(255,255,255,.05)' : 'rgba(255,255,255,.035)') : (i === 1 ? 'rgba(255,255,255,.02)' : 'transparent');
+    });
+    set(one('[data-cmp-plus]'), 'transform', S.cmp ? 'rotate(45deg)' : 'rotate(0deg)');
+    const cp = one('[data-cmp-panel]');
+    if (cp) { cp.style.maxHeight = S.cmp ? '720px' : '0px'; cp.style.opacity = S.cmp ? '1' : '0'; }
+
+    set(one('[data-ba-before]'), 'clipPath', 'inset(0 ' + (100 - S.ba).toFixed(2) + '% 0 0)');
+    set(one('[data-ba-handle]'), 'left', S.ba.toFixed(2) + '%');
+  };
+
+  setBA = (e) => {
+    const el = this.baRef && this.baRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const pct = Math.max(2, Math.min(98, ((e.clientX - r.left) / r.width) * 100));
+    this.set({ ba: pct });
+  };
+
+  renderVals() {
+    const S = Object.assign({}, this.state, this.ui);
+    const specData = [
+      ['01', 'Fotografía', 'Producto, platos y espacios con luz controlada.'],
+      ['02', 'Video vertical', 'Reels y TikToks pensados para el formato, no recortados.'],
+      ['03', 'Edición', 'Color, ritmo y limpieza. La pieza se termina, no se entrega cruda.'],
+      ['04', 'Dirección creativa', 'Ideas, calendario y criterio visual detrás de cada publicación.']
+    ];
+    const svcData = [
+      ['01', 'Fotografía de producto y espacios', 'Catálogo limpio, ambientes y detalle. Enfocado en que el producto se lea igual en local que en pantalla.', ['Catálogo', 'Espacios', 'Detalle']],
+      ['02', 'Gastronomía y mesa', 'Plato, barra y ambiente: la comida se ve apetecible y el local reconocible.', ['Plato', 'Barra', 'Ambiente']],
+      ['03', 'Reels, TikToks y video vertical', 'Guion corto, captura y edición con ritmo para publicar de inmediato.', ['9:16', 'Edición', 'Publicable']],
+      ['04', 'Planes mensuales de contenido', 'Una sesión al mes que alimenta fotografía, reels e historias con calendario.', ['Mensual', 'Calendario', 'Historias']]
+    ];
+    const vals = {
+      prog: S.prog,
+      navBg: S.navBg,
+      specs: specData.map((d, i) => ({
+        num: d[0], name: d[1], desc: d[2],
+        enter: () => this.set({ spec: i })
+      })),
+      specLabel: specData[S.spec][1],
+      specNum: specData[S.spec][0],
+      services: svcData.map((d, i) => ({
+        num: d[0], name: d[1], desc: d[2], tags: d[3],
+        open: () => this.set(u => ({ svc: u.svc === i ? -1 : i })),
+        hover: () => {}
+      })),
+      baRef: (this.baRef = this.baRef || React.createRef()),
+      baDown: (e) => { this._drag = true; if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); this.setBA(e); },
+      baMove: (e) => { if (this._drag) this.setBA(e); },
+      baUp: () => { this._drag = false; },
+      toggleCmp: () => this.set(u => ({ cmp: !u.cmp })),
+      cmpLabel: S.cmp ? 'Ocultar comparación de alcance' : 'Comparar alcance completo',
+      cmpRows: [
+        { k: 'Precio mensual', a: '$175', b: '$295', c: '$450' },
+        { k: 'Sesiones', a: '1 × 2 h', b: '1 × 3 h', c: '2 × 3 h' },
+        { k: 'Fotografías editadas', a: '12', b: '24', c: '40' },
+        { k: 'Reels verticales', a: '3', b: '6', c: '10' },
+        { k: 'Piezas para historias', a: '8', b: '12', c: '20' },
+        { k: 'Escenarios', a: '1', b: 'Hasta 2', c: 'Hasta 3' },
+        { k: 'Planificación', a: 'Ideas básicas', b: 'Calendario', c: 'Dirección + calendario' },
+        { k: 'Retoque avanzado', a: '2 fotos', b: '5 fotos', c: '10 fotos' }
+      ],
+      p0enter: () => this.set({ plan: 0 }),
+      p1enter: () => this.set({ plan: 1 }),
+      p2enter: () => this.set({ plan: 2 }),
+      toggleMenu: () => this.set(u => ({ menu: !u.menu })),
+      catCount: '05 categorías',
+      slideLabel: String(S.vi + 1).padStart(2, '0') + ' / 05',
+      prev: () => this.set(u => ({ vi: (u.vi + 4) % 5 })),
+      next: () => this.set(u => ({ vi: (u.vi + 1) % 5 })),
+      prog: S.prog
+    };
+    for (let i = 0; i < 5; i++) vals['go' + i] = () => this.set({ vi: i });
+    const catTags = ['Todo', 'Gastronomía', 'Espacios', 'Automotriz', 'Detrás', 'Contenido'];
+    catTags.forEach((n, k) => { vals['chip' + k] = () => this.set({ cat: k }); });
+    vals.catCount = S.cat === 0 ? '05 categorías' : catTags[S.cat];
+    return vals;
+  }
+}
+
+</script>
+</body>
+</html>

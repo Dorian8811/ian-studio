@@ -1,0 +1,71 @@
+# ---------------------------------------------------------------------------
+# Ian Studio — .gitignore
+# ---------------------------------------------------------------------------
+
+# Dependencias
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Build de Next.js
+.next/
+out/
+build/
+dist/
+next-env.d.ts
+
+# Cachés y herramientas
+.turbo/
+.swc/
+*.tsbuildinfo
+
+# Variables de entorno (el .env.example SÍ se versiona)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Vercel
+.vercel
+
+# Cobertura / tests
+coverage/
+.nyc_output/
+
+# ---------------------------------------------------------------------------
+# MATERIAL PRIVADO DE DISEÑO — NO SE PUBLICA
+# ---------------------------------------------------------------------------
+# Originales, PDFs, capturas de clientes, material de Canva y cualquier
+# archivo de trabajo que no forme parte de la web en producción.
+# La maqueta (.dc.html) y /img SÍ se conservan como referencia versionada.
+_design/uploads/
+
+# Cualquier carpeta de originales suelta en la raíz
+/uploads/
+/originales/
+*.pdf
+
+# Salidas temporales de scripts locales
+/scripts/.tmp/
