@@ -1,0 +1,27 @@
+{
+  "name": "ian-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ian Studio — fotografía, video y contenido. Costa Rica.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "assets": "node scripts/build-assets.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "sharp": "^0.35.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
