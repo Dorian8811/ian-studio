@@ -22,7 +22,7 @@ export default function Gallery({ pieces, onOpen, panelId }) {
         return (
           <div
             key={piece.id}
-            className={`${styles.cell} ${cell.hero ? styles.hero : ""} ${cell.lowRes ? styles.lowRes : ""}`}
+            className={`${styles.cell} ${cell.hero ? styles.hero : ""} ${cell.lowRes ? styles.lowRes : ""} ${cell.scaleClass ? styles[cell.scaleClass] : ""}`}
           >
             <button type="button" className={styles.figure} onClick={() => onOpen(i)}>
               <div className={styles.frame}>
@@ -32,9 +32,11 @@ export default function Gallery({ pieces, onOpen, panelId }) {
                   width={piece.width}
                   height={piece.height}
                   sizes={
-                    cell.hero
+                    cell.scaleClass === "hero"
                       ? "100vw"
-                      : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      : cell.scaleClass === "hero-center"
+                        ? "(min-width: 1024px) 85vw, 100vw"
+                        : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   }
                   quality={90}
                 />
