@@ -156,7 +156,7 @@
   transition: transform 0.9s var(--ease-out);
 }
 
-[data-rv].is-visible .mobileFrame {
+[data-rv][data-revealed="true"] .mobileFrame {
   transform: scale(1);
 }
 

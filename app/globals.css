@@ -138,9 +138,15 @@ button {
   to { opacity: 1; }
 }
 
-/* Reveal por scroll: estado inicial antes de que IntersectionObserver
-   añada .is-visible. Sin JS (o con reduced-motion) el contenido es visible
-   de inmediato — ver el guard en reduced-motion más abajo. */
+/* Reveal por scroll: estado inicial antes de que IntersectionObserver marque
+   data-revealed="true". Sin JS (o con reduced-motion) el contenido es visible
+   de inmediato — ver el guard en reduced-motion más abajo.
+
+   Se usa un atributo, no una clase .is-visible: React reescribe `class` en
+   cada re-render de la sección dueña del elemento (abrir un acordeón,
+   cambiar de categoría, hover en un plan), y una clase añadida a mano fuera
+   de React se pierde en ese reescritura. Un atributo que React nunca declara
+   como prop sobrevive intacto. */
 [data-rv] {
   opacity: 0;
   transform: translate3d(0, 34px, 0);
@@ -148,7 +154,7 @@ button {
     transform var(--dur-reveal-slow) var(--ease-out);
 }
 
-[data-rv].is-visible {
+[data-rv][data-revealed="true"] {
   opacity: 1;
   transform: none;
 }

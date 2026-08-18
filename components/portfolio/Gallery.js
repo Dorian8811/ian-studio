@@ -22,7 +22,7 @@ export default function Gallery({ pieces, onOpen, panelId }) {
         return (
           <div
             key={piece.id}
-            className={`${styles.cell} span-${cell.span} ${cell.lowRes ? styles.lowRes : ""}`}
+            className={`${styles.cell} ${styles[`span-${cell.span}`]} ${cell.lowRes ? styles.lowRes : ""}`}
           >
             <button type="button" className={styles.figure} onClick={() => onOpen(i)}>
               <div className={styles.frame} style={{ aspectRatio: cell.aspect }}>

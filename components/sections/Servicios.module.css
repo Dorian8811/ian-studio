@@ -151,7 +151,10 @@
 }
 
 .row.open .panel {
-  max-height: 320px;
+  /* Suficiente para el texto + tags en desktop y, en mobile, también la
+     vista previa inline (16:10) — el contenido real nunca llega a esto,
+     solo evita que el tope corte la descripción. */
+  max-height: 480px;
   opacity: 1;
 }
 

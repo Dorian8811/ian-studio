@@ -14,7 +14,12 @@ export function useReveal(root) {
     const els = Array.from(scope.querySelectorAll("[data-rv]"));
     if (els.length === 0) return undefined;
 
-    const show = (el) => el.classList.add("is-visible");
+    // Un atributo, no una clase: React controla `className` en cada re-render
+    // de la sección dueña del elemento (cualquier toggle de estado — abrir un
+    // acordeón, cambiar de categoría, hover en un plan) y reescribe `class`
+    // por completo, borrando cualquier clase añadida a mano. `data-revealed`
+    // nunca es una prop de React en estos nodos, así que sobrevive intacto.
+    const show = (el) => el.setAttribute("data-revealed", "true");
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
@@ -32,7 +37,7 @@ export function useReveal(root) {
       if (r.top < window.innerHeight) show(el);
     });
 
-    const pending = els.filter((el) => !el.classList.contains("is-visible"));
+    const pending = els.filter((el) => el.getAttribute("data-revealed") !== "true");
     if (pending.length === 0) return undefined;
 
     const io = new IntersectionObserver(
