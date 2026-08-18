@@ -69,3 +69,6 @@ _design/uploads/
 
 # Salidas temporales de scripts locales
 /scripts/.tmp/
+
+.vercel
+.env*
