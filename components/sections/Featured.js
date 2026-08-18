@@ -6,9 +6,7 @@ import styles from "./Featured.module.css";
 export default function Featured() {
   return (
     <section id="suburban" className={styles.section}>
-      <div className={styles.backdrop} data-par="-0.08" aria-hidden="true">
-        {featured.backdrop}
-      </div>
+
 
       <div className={styles.inner}>
         <div className={styles.eyebrowRow} data-rv>
