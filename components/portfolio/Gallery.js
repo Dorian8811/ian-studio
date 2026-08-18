@@ -22,7 +22,7 @@ export default function Gallery({ pieces, onOpen, panelId }) {
         return (
           <div
             key={piece.id}
-            className={`${styles.cell} ${cell.hero ? styles.hero : ""} ${cell.lowRes ? styles.lowRes : ""} ${cell.scaleClass ? styles[cell.scaleClass] : ""}`}
+            className={`${styles.cell} ${cell.hero ? styles.hero : ""} ${cell.lowRes ? styles.lowRes : ""} ${cell.scaleClass ? styles[cell.scaleClass] : ""} ${piece.orientacion === "vertical" ? styles.vertical : ""}`}
           >
             <button type="button" className={styles.figure} onClick={() => onOpen(i)}>
               <div className={styles.frame}>

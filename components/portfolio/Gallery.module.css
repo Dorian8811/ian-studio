@@ -35,12 +35,18 @@
     max-width: 85%;
     margin-inline: auto;
   }
+  .cell.hero.vertical {
+    max-width: 50%;
+  }
 }
 
 @media (min-width: 1440px) {
   .cell.hero {
     max-width: 1100px;
     margin-inline: auto;
+  }
+  .cell.hero.vertical {
+    max-width: 650px; /* Una imagen 4:5 no pasará de 812px de alto */
   }
 }
 
