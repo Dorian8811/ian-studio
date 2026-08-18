@@ -47,64 +47,35 @@ export const tickerItems = [
 
 /**
  * 05 — Contenido vertical.
- * Fotogramas reales recortados a 9:16 mientras no existan capturas nativas
- * del reel (ver «Datos pendientes» del README).
+ * Reels reales en 9:16 (no fotogramas recortados). Origen: scripts/build-assets.mjs
+ * transcodifica los originales de cámara (~20 Mbps) a un MP4 web de ~3 Mbps.
  */
 export const verticalSlides = [
   {
     id: "reel-01",
     label: "Reel 01",
-    categoria: "Automotriz",
-    duracion: "0:18",
-    src: "/images/auto-shelby-gt500.jpg",
-    width: 1086,
-    height: 1448,
-    objectPosition: "50% 45%",
-    alt: "Fotograma vertical de una pieza automotriz: frontal de un Shelby GT500.",
+    categoria: "Gastronomía",
+    duracion: "0:22",
+    type: "video",
+    src: "/videos/reel-01.mp4",
+    poster: "/images/reel-01-poster.jpg",
+    width: 1080,
+    height: 1920,
+    objectPosition: "50% 50%",
+    alt: "Reel vertical de gastronomía: preparación y emplatado de albóndigas en cocina.",
   },
   {
     id: "reel-02",
     label: "Reel 02",
     categoria: "Gastronomía",
-    duracion: "0:24",
-    src: "/images/food-lasana-vino.jpg",
-    width: 897,
-    height: 1600,
-    objectPosition: "50% 50%",
-    alt: "Fotograma vertical de gastronomía: pasta al horno junto a una copa de vino.",
-  },
-  {
-    id: "reel-03",
-    label: "Reel 03",
-    categoria: "Mesa",
     duracion: "0:15",
-    src: "/images/food-spaghetti-albondigas.jpg",
-    width: 1023,
-    height: 1537,
+    type: "video",
+    src: "/videos/reel-02.mp4",
+    poster: "/images/reel-02-poster.jpg",
+    width: 1080,
+    height: 1920,
     objectPosition: "50% 50%",
-    alt: "Fotograma vertical de mesa: bowl de spaghetti con albóndigas.",
-  },
-  {
-    id: "reel-04",
-    label: "Reel 04",
-    categoria: "Producto",
-    duracion: "0:21",
-    src: "/images/food-bandeja-carne-mechada.jpg",
-    width: 1024,
-    height: 1536,
-    objectPosition: "50% 50%",
-    alt: "Fotograma vertical de producto: bandeja de carne mechada con guarniciones.",
-  },
-  {
-    id: "reel-05",
-    label: "Reel 05",
-    categoria: "Detalle",
-    duracion: "0:12",
-    src: "/images/auto-amg-gt-rojo.jpg",
-    width: 384,
-    height: 512,
-    objectPosition: "50% 50%",
-    alt: "Fotograma vertical de detalle: perfil de un Mercedes-AMG GT rojo.",
+    alt: "Reel vertical de gastronomía: preparación de mezcla con huevo en cocina.",
   },
 ];
 

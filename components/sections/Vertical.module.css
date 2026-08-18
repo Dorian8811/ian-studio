@@ -116,6 +116,7 @@
 
 @media (min-width: 1024px) {
   .desktopTrackWrap {
+    display: block;
     margin-top: 56px;
     overflow: hidden;
   }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import ReelVideo from "@/components/ui/ReelVideo";
 import { verticalSlides, verticalNote } from "@/data/content";
 import styles from "./Vertical.module.css";
 
@@ -50,7 +51,11 @@ export default function Vertical() {
           {verticalSlides.map((s, i) => (
             <div key={s.id} className={`${styles.slide} ${active === i ? styles.active : ""}`}>
               <div className={styles.slideFrame}>
-                <Image src={s.src} alt={s.alt} fill sizes="300px" style={{ objectPosition: s.objectPosition }} />
+                {s.type === "video" ? (
+                  <ReelVideo src={s.src} poster={s.poster} alt={s.alt} active={active === i} priority={i === 0} />
+                ) : (
+                  <Image src={s.src} alt={s.alt} fill sizes="300px" style={{ objectPosition: s.objectPosition }} />
+                )}
                 <span className={styles.slideTag}>{s.label}</span>
               </div>
               <div className={styles.slideMeta}>
@@ -83,7 +88,11 @@ export default function Vertical() {
         {verticalSlides.map((s) => (
           <div key={s.id} className={styles.mobileSlide}>
             <div className={styles.mobileFrame}>
-              <Image src={s.src} alt={s.alt} fill sizes="62vw" style={{ objectPosition: s.objectPosition }} />
+              {s.type === "video" ? (
+                <ReelVideo src={s.src} poster={s.poster} alt={s.alt} />
+              ) : (
+                <Image src={s.src} alt={s.alt} fill sizes="62vw" style={{ objectPosition: s.objectPosition }} />
+              )}
               <span className={styles.slideTag}>{s.label}</span>
             </div>
             <div className={styles.slideMeta}>

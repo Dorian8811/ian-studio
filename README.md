@@ -71,6 +71,33 @@ _design/               Maqueta original de Claude Design — solo referencia
 No hay que tocar ningún componente: la galería, el lightbox y la selección
 de "Todo" leen siempre de `data/portfolio.js`.
 
+## Cómo añadir un reel de video nuevo
+
+Los archivos de cámara vienen a bitrates muy altos (~20 Mbps) — hay que
+comprimirlos antes de publicarlos. Con [ffmpeg](https://ffmpeg.org) instalado:
+
+```bash
+ffmpeg -i original.mp4 \
+  -c:v libx264 -preset slow -crf 24 -maxrate 3200k -bufsize 6400k -pix_fmt yuv420p \
+  -c:a aac -b:a 96k -ac 2 \
+  -movflags +faststart \
+  public/videos/reel-03.mp4
+```
+
+Luego genera el poster (fotograma de portada, se ve mientras el video carga):
+
+```bash
+ffmpeg -ss 3 -i public/videos/reel-03.mp4 -frames:v 1 -q:v 2 poster-raw.jpg
+```
+
+Procesa ese JPG con la misma calidad que el resto de fotos (ver
+`scripts/build-assets.mjs`) y guárdalo como `public/images/reel-03-poster.jpg`.
+
+Añade la pieza a `verticalSlides` en `data/content.js` con `type: "video"`,
+`src` (el mp4), `poster`, `width`/`height` reales del video y `duracion`.
+El contador de la sección ("01 / 03", etc.) se ajusta solo según cuántos
+reels haya en el arreglo — no hay que tocar el componente.
+
 ## Cómo activar una categoría
 
 Las seis categorías completas ya existen en `data/categories.js`. Para
