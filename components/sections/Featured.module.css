@@ -1,0 +1,228 @@
+.section {
+  position: relative;
+  background: var(--color-black);
+  border-top: 1px solid var(--color-hairline);
+  padding: 96px 0 0;
+  overflow: hidden;
+}
+
+.backdrop {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(70px, 22vw, 290px);
+  line-height: 0.78;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  color: rgba(246, 247, 250, 0.05);
+  text-transform: uppercase;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.inner {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (min-width: 1024px) {
+  .inner { padding: 0 56px; }
+}
+
+.eyebrowRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.36);
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.eyebrowRow span:first-child {
+  color: var(--w);
+}
+
+@media (min-width: 1024px) {
+  .eyebrowRow { font-size: 10px; letter-spacing: 0.2em; padding-bottom: 34px; }
+}
+
+.headRow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 36px;
+}
+
+@media (min-width: 1024px) {
+  .headRow {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 56px;
+    padding-top: 70px;
+  }
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(40px, 12vw, 124px);
+  line-height: 0.86;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.headingItalic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--w);
+}
+
+.keywords {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.42);
+}
+
+@media (min-width: 1024px) {
+  .keywords { gap: 34px; font-size: 10px; letter-spacing: 0.2em; }
+}
+
+/* Riel horizontal nativo */
+.railWrap {
+  position: relative;
+  margin-top: 48px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  padding-bottom: 10px;
+}
+
+@media (min-width: 1024px) {
+  .railWrap { margin-top: 64px; }
+}
+
+.railWrap::-webkit-scrollbar {
+  display: none;
+}
+
+.rail {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  padding: 0 20px;
+}
+
+@media (min-width: 1024px) {
+  .rail { gap: 20px; padding: 0 56px; }
+}
+
+.railItem {
+  margin: 0;
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+  cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .railItem { height: 420px; }
+}
+
+@media (min-width: 1024px) {
+  .railItem { height: 520px; }
+}
+
+.railItem img {
+  object-fit: cover;
+}
+
+.railCaption {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.8);
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+/* Pie: texto + ficha */
+.footer {
+  max-width: 1440px;
+  margin: 56px auto 0;
+  padding: 48px 20px 96px;
+  display: grid;
+  gap: 32px;
+  border-top: 1px solid var(--color-hairline);
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 56px;
+    padding: 60px 56px 130px;
+  }
+}
+
+.footerText {
+  margin: 0;
+  grid-column: span 1;
+  max-width: 640px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: rgba(246, 247, 250, 0.68);
+  text-wrap: pretty;
+}
+
+@media (min-width: 1024px) {
+  .footerText { grid-column: span 2; font-size: 19px; line-height: 1.55; }
+}
+
+.factList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.42);
+}
+
+.factRow {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-hairline);
+  padding-bottom: 10px;
+}
+
+.factRow:last-child {
+  border-bottom: none;
+}
+
+.factRow span:last-child {
+  color: var(--color-white);
+}

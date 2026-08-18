@@ -1,0 +1,145 @@
+.section {
+  position: relative;
+  padding: 88px 20px 96px;
+  background: var(--color-black);
+}
+
+@media (min-width: 1024px) {
+  .section { padding: 168px 56px 150px; }
+}
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.eyebrowRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.36);
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+@media (min-width: 1024px) {
+  .eyebrowRow { font-size: 10px; letter-spacing: 0.2em; padding-bottom: 34px; }
+}
+
+.grid {
+  display: grid;
+  gap: 48px;
+  padding-top: 44px;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 380px;
+    gap: 78px;
+    padding-top: 74px;
+    align-items: start;
+  }
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(30px, 8.6vw, 74px);
+  line-height: 1.06;
+  font-weight: 500;
+  letter-spacing: -0.032em;
+  max-width: 16ch;
+  text-wrap: pretty;
+}
+
+.headingItalic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.blocks {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 44px;
+  max-width: 760px;
+}
+
+@media (min-width: 640px) {
+  .blocks { grid-template-columns: repeat(2, 1fr); gap: 36px 48px; }
+}
+
+@media (min-width: 1024px) {
+  .blocks { gap: 44px 64px; margin-top: 78px; }
+}
+
+.blockNum {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--a-soft);
+  padding-bottom: 14px;
+  border-top: 1px solid rgba(246, 247, 250, 0.12);
+  padding-top: 14px;
+}
+
+.blockText {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(246, 247, 250, 0.62);
+  text-wrap: pretty;
+}
+
+@media (min-width: 1024px) {
+  .blockText { font-size: 15.5px; line-height: 1.62; }
+}
+
+.portrait {
+  position: relative;
+}
+
+.portraitFrame {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .portraitFrame { height: 420px; }
+}
+
+@media (min-width: 1024px) {
+  .portraitFrame { height: 520px; }
+}
+
+.portraitFrame img {
+  object-fit: cover;
+  filter: contrast(1.05);
+}
+
+.portraitCaption {
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+  padding: 20px 18px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0));
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.6);
+  display: flex;
+  justify-content: space-between;
+}
+
+.portraitCaption span:last-child {
+  color: var(--a-soft);
+}

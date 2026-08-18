@@ -1,0 +1,334 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-black);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    display: grid;
+    grid-template-columns: 1.02fr 0.98fr;
+    min-height: 100vh;
+  }
+}
+
+/* ---- Imagen ---- */
+.media {
+  position: relative;
+  overflow: hidden;
+  height: 58svh;
+  flex: none;
+}
+
+@media (min-width: 1024px) {
+  .media {
+    height: auto;
+  }
+}
+
+.driftWrap {
+  position: absolute;
+  inset: -6%;
+  animation: drift 30s ease-in-out infinite;
+}
+
+.driftWrap img {
+  object-fit: cover;
+}
+
+.scrimH {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.15) 26%,
+    rgba(0, 0, 0, 0.85) 78%,
+    #000 100%
+  );
+}
+
+@media (min-width: 1024px) {
+  .scrimH {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 0.35) 78%, #000 100%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.7) 100%);
+  }
+}
+
+.secondary {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .secondary {
+    display: block;
+    position: absolute;
+    top: 44%;
+    right: 20px;
+    width: clamp(96px, 26vw, 140px);
+    height: clamp(120px, 33vw, 176px);
+    z-index: 3;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+  }
+
+  .secondary img {
+    object-fit: cover;
+  }
+}
+
+.caption {
+  position: absolute;
+  left: 46px;
+  bottom: 44px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.62);
+}
+
+@media (max-width: 1023px) {
+  .caption { display: none; }
+}
+
+.captionLine {
+  width: 34px;
+  height: 1px;
+  background: rgba(246, 247, 250, 0.4);
+}
+
+/* ---- Texto ---- */
+.content {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px 20px 44px;
+  background: var(--color-black);
+}
+
+@media (min-width: 1024px) {
+  .content {
+    justify-content: center;
+    padding: 132px clamp(40px, 5vw, 86px) 64px;
+  }
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--w);
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.eyebrowDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--w);
+  flex: none;
+}
+
+.index {
+  color: rgba(246, 247, 250, 0.3);
+  white-space: nowrap;
+  flex: none;
+}
+
+@media (max-width: 1023px) {
+  .index { display: none; }
+}
+
+.heading {
+  margin: 18px 0 0;
+  font-size: clamp(46px, 13vw, 116px);
+  line-height: 0.86;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1024px) {
+  .heading { margin: 26px 0 0; }
+}
+
+.headingItalic {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-size: 1.08em;
+  line-height: 0.94;
+  color: var(--w);
+}
+
+.text {
+  margin: 22px 0 0;
+  max-width: 400px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgba(246, 247, 250, 0.7);
+  text-wrap: pretty;
+}
+
+@media (min-width: 1024px) {
+  .text { margin: 38px 0 0; font-size: 16px; line-height: 1.6; color: rgba(246, 247, 250, 0.62); }
+}
+
+.ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+@media (min-width: 1024px) {
+  .ctas { flex-direction: row; align-items: center; gap: 16px; margin-top: 40px; }
+}
+
+.ctaPrimary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 26px;
+  background: var(--color-white);
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+@media (min-width: 1024px) {
+  .ctaPrimary {
+    height: auto;
+    padding: 16px 26px;
+    background: transparent;
+    border: 1px solid var(--w);
+    color: var(--w);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+  .ctaPrimary:hover {
+    background: var(--w);
+    color: #000;
+  }
+}
+
+.ctaSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  border: 1px solid rgba(246, 247, 250, 0.22);
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.85);
+}
+
+@media (min-width: 1024px) {
+  .ctaSecondary {
+    height: auto;
+    border: none;
+    justify-content: flex-start;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: rgba(246, 247, 250, 0.55);
+    border-bottom: 1px solid rgba(246, 247, 250, 0.22);
+    padding-bottom: 6px;
+    transition: color 0.35s, border-color 0.35s;
+  }
+  .ctaSecondary:hover {
+    color: var(--color-white);
+    border-color: var(--w);
+  }
+}
+
+.footRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 22px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.5);
+}
+
+@media (min-width: 1024px) {
+  .footRow {
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 56px;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: rgba(246, 247, 250, 0.34);
+  }
+}
+
+.disciplines {
+  display: flex;
+  gap: 14px;
+}
+
+@media (min-width: 1024px) {
+  .disciplines { gap: 26px; }
+}
+
+.year {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .year { display: inline; }
+}
+
+.cue {
+  position: absolute;
+  bottom: 14px;
+  left: calc(51% - 1px);
+  z-index: 8;
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(to bottom, var(--w), transparent);
+  animation: cue 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .driftWrap { animation: none; }
+  .cue { animation: none; opacity: 0.4; }
+}

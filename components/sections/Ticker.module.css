@@ -1,0 +1,39 @@
+.wrap {
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
+  background: var(--color-black);
+  overflow: hidden;
+  padding: 15px 0;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: ticker 34s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.3);
+}
+
+.wrap:hover .track {
+  animation-play-state: paused;
+}
+
+.item {
+  padding-right: 38px;
+}
+
+.dot {
+  padding-right: 38px;
+  color: var(--a-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

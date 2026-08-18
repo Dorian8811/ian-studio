@@ -1,0 +1,79 @@
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  cursor: ew-resize;
+  background: var(--color-surface);
+}
+
+.frame img {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.before {
+  position: absolute;
+  inset: 0;
+}
+
+.handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(246, 247, 250, 0.9);
+  pointer-events: none;
+}
+
+.knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(46px, 11vw, 52px);
+  height: clamp(46px, 11vw, 52px);
+  border-radius: 50%;
+  border: 1px solid rgba(246, 247, 250, 0.85);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-white);
+  pointer-events: auto;
+  cursor: ew-resize;
+}
+
+.knob:focus-visible {
+  outline: 1px solid var(--a);
+  outline-offset: 4px;
+}
+
+.label {
+  position: absolute;
+  top: 16px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  color: rgba(246, 247, 250, 0.85);
+}
+
+.labelBefore {
+  left: 16px;
+}
+
+.labelAfter {
+  right: 16px;
+  color: #000;
+  background: var(--a);
+}
