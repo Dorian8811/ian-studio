@@ -1,0 +1,124 @@
+.section {
+  position: relative;
+  background: var(--color-black);
+  padding: 56px 0;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .section { padding: 120px 0; }
+}
+
+.inner {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (min-width: 1024px) {
+  .inner { padding: 0 56px; }
+}
+
+.eyebrowRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.36);
+  padding-bottom: 22px;
+}
+
+@media (min-width: 1024px) {
+  .eyebrowRow { font-size: 10px; letter-spacing: 0.2em; padding-bottom: 34px; }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 40px;
+  }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.heading {
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.italic {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  color: rgba(246, 247, 250, 0.7);
+}
+
+.bodyText {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(246, 247, 250, 0.6);
+  max-width: 520px;
+}
+
+@media (min-width: 1024px) {
+  .bodyText { font-size: 17px; }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid rgba(246, 247, 250, 0.1);
+  border-radius: 40px;
+  color: rgba(246, 247, 250, 0.5);
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+@media (min-width: 1024px) {
+  .imageWrap { aspect-ratio: 3 / 4; }
+}
+
+.image {
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.4s ease;
+}
+
+.imageWrap:hover .image {
+  opacity: 1;
+}

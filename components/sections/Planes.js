@@ -51,10 +51,6 @@ export default function Planes() {
                   <span className={styles.planNum}>{p.num}</span>
                 )}
               </div>
-              <div className={styles.priceRow}>
-                <span className={styles.price}>{p.priceLabel}</span>
-                <span className={styles.period}>{p.period}</span>
-              </div>
               <div className={styles.features}>
                 {p.features.map((f) => (
                   <span key={f} className={styles.feature}>
@@ -95,10 +91,6 @@ export default function Planes() {
                 {mobilePlan.name}
               </span>
               {mobilePlan.recommended && <span className={styles.recTag}>Recomendado</span>}
-            </div>
-            <div className={styles.mobilePrice}>
-              <span className={styles.price}>{mobilePlan.priceLabel}</span>
-              <span className={styles.period}>{mobilePlan.period}</span>
             </div>
             <div className={styles.features}>
               {mobilePlan.features.map((f) => (

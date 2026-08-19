@@ -11,6 +11,7 @@ import Featured from "@/components/sections/Featured";
 import Edicion from "@/components/sections/Edicion";
 import Servicios from "@/components/sections/Servicios";
 import Planes from "@/components/sections/Planes";
+import Web from "@/components/sections/Web";
 import Extras from "@/components/sections/Extras";
 import Contacto from "@/components/sections/Contacto";
 import { site, siteUrl } from "@/data/site";
@@ -55,6 +56,7 @@ export default function Home() {
         <Edicion />
         <Servicios />
         <Planes />
+        <Web />
         <Extras />
         <Contacto />
       </main>

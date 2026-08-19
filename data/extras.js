@@ -1,16 +1,19 @@
-/** 10 — Extras y condiciones. Seis líneas de precio, sin convertirlas en cards. */
+/** 10 — Extras y condiciones. Seis líneas de servicio, sin convertirlas en cards. */
 
 export const extras = [
-  { num: "01", name: "Reel adicional", price: "$35" },
-  { num: "02", name: "Paquete de 10 fotografías", price: "$45" },
-  { num: "03", name: "Hora adicional de producción", price: "$30" },
-  { num: "04", name: "Publicación y manejo mensual", price: "Desde $90" },
-  { num: "05", name: "Sitio web tipo catálogo", price: "Desde $420" },
-  { num: "06", name: "Ubicación adicional", price: "Desde $25" },
+  { num: "01", name: "Edición prioritaria (48 horas)" },
+  { num: "02", name: "Retoque avanzado de producto (por imagen)" },
+  { num: "03", name: "Tomas aéreas / Drone" },
+  { num: "04", name: "Locutor o talento en cámara" },
+  { num: "05", name: "Diseño y desarrollo de sitios web" },
+  { num: "06", name: "Viáticos fuera del GAM" },
 ];
 
+export const extrasNote =
+  "Servicio sujeto a cotización. Consultar para requerimientos específicos.";
+
 export const conditions = [
-  "Servicio y precios mensuales en USD.",
+  "Servicios sujetos a cotización personalizada.",
   "Se reserva con el 50% del total.",
   "Incluye una ronda de ajustes menores.",
   "Entrega estimada: 7 días hábiles.",

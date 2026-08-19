@@ -160,9 +160,9 @@ export const edicion = {
   despues: "espacio-bano-despues",
 };
 
-/** 11 — Contacto. */
+/** 12 — Contacto. */
 export const contacto = {
-  eyebrow: "11 — Hablemos",
+  eyebrow: "12 — Hablemos",
   eyebrowRight: "Disponible para 2026",
   headingA: "Tu próxima idea",
   headingB: "puede empezar aquí.",

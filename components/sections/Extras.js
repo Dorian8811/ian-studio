@@ -6,7 +6,7 @@ export default function Extras() {
     <section id="extras" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.eyebrowRow} data-rv>
-          <span>10 — Extras</span>
+          <span>11 — Extras</span>
           <span>Personaliza el alcance</span>
         </div>
 
@@ -16,7 +16,6 @@ export default function Extras() {
               <div key={e.num} className={styles.line} data-rv>
                 <span className={styles.lineNum}>{e.num}</span>
                 <span className={styles.lineName}>{e.name}</span>
-                <span className={styles.linePrice}>{e.price}</span>
               </div>
             ))}
           </div>

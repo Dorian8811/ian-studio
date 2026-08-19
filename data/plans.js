@@ -1,8 +1,8 @@
 /** 09 — Planes mensuales. Precios en USD, vigentes julio 2026. */
 
 export const plansMeta = {
-  moneda: "USD",
-  vigencia: "Precios en USD · Julio 2026",
+  moneda: "",
+  vigencia: "Cotización personalizada",
 };
 
 export const plans = [
@@ -10,9 +10,6 @@ export const plans = [
     id: "basico",
     num: "01",
     name: "Básico",
-    price: 175,
-    priceLabel: "$175",
-    period: "USD / mes",
     recommended: false,
     features: [
       "1 sesión mensual de hasta 2 horas",
@@ -28,9 +25,6 @@ export const plans = [
     id: "avanzado",
     num: "02",
     name: "Avanzado",
-    price: 295,
-    priceLabel: "$295",
-    period: "USD / mes",
     recommended: true,
     features: [
       "1 sesión mensual de hasta 3 horas",
@@ -47,9 +41,6 @@ export const plans = [
     num: "03",
     name: "Profesional",
     nameShort: "Pro",
-    price: 450,
-    priceLabel: "$450",
-    period: "USD / mes",
     recommended: false,
     features: [
       "2 sesiones mensuales de hasta 3 horas",
@@ -65,7 +56,6 @@ export const plans = [
 
 /** Tabla comparativa: una fila por alcance, una columna por plan. */
 export const comparisonRows = [
-  { k: "Precio mensual", a: "$175", b: "$295", c: "$450" },
   { k: "Sesiones", a: "1 × 2 h", b: "1 × 3 h", c: "2 × 3 h" },
   { k: "Fotografías editadas", a: "12", b: "24", c: "40" },
   { k: "Reels verticales", a: "3", b: "6", c: "10" },
