@@ -7,7 +7,16 @@
 const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 /** URL pública sin barra final. En desarrollo cae a localhost. */
-export const siteUrl = (RAW_SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
+let parsedUrl = "http://localhost:3000";
+try {
+  if (RAW_SITE_URL && RAW_SITE_URL.includes("http")) {
+    parsedUrl = RAW_SITE_URL.replace(/["'\\]/g, "");
+  } else if (RAW_SITE_URL) {
+    parsedUrl = "https://" + RAW_SITE_URL.replace(/["'\\]/g, "");
+  }
+} catch (e) {}
+
+export const siteUrl = parsedUrl.replace(/\/+$/, "");
 
 /** true cuando NEXT_PUBLIC_SITE_URL está configurada de verdad. */
 export const hasPublicUrl = Boolean(RAW_SITE_URL);

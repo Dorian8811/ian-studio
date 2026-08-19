@@ -55,8 +55,8 @@ export default function Home() {
         <Featured />
         <Edicion />
         <Servicios />
-        <Planes />
         <Web />
+        <Planes />
         <Extras />
         <Contacto />
       </main>

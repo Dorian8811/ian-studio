@@ -19,7 +19,7 @@ export const plans = [
       "Plan básico de ideas",
       "1 escenario o ubicación",
     ],
-    cta: "Reservar básico",
+    cta: "Solicitar cotización",
   },
   {
     id: "avanzado",
@@ -34,7 +34,7 @@ export const plans = [
       "Calendario mensual de contenido",
       "Retoque avanzado en 5 fotografías",
     ],
-    cta: "Reservar avanzado",
+    cta: "Solicitar cotización",
   },
   {
     id: "profesional",
@@ -50,7 +50,7 @@ export const plans = [
       "Dirección creativa y calendario",
       "Retoque avanzado + entrega prioritaria",
     ],
-    cta: "Reservar profesional",
+    cta: "Solicitar cotización",
   },
 ];
 

@@ -83,42 +83,201 @@
   .bodyText { font-size: 17px; }
 }
 
-.tags {
+.servicesList {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.tag {
+.servicesList li {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: rgba(246, 247, 250, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.servicesList li::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: var(--color-blue);
+  border-radius: 50%;
+}
+
+@media (min-width: 1024px) {
+  .servicesList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 16px;
+  }
+}
+
+.ctaWrap {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  background: var(--color-white);
+  color: var(--color-black);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+  text-decoration: none;
+}
+
+.ctaButton:hover {
+  opacity: 0.9;
+}
+
+.ctaNote {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 6px 12px;
-  border: 1px solid rgba(246, 247, 250, 0.1);
-  border-radius: 40px;
-  color: rgba(246, 247, 250, 0.5);
+  color: rgba(246, 247, 250, 0.4);
 }
 
-.imageWrap {
+.visualWrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 4px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 1024px) {
-  .imageWrap { aspect-ratio: 3 / 4; }
+  .visualWrap { aspect-ratio: 4 / 3; }
 }
 
-.image {
-  object-fit: cover;
-  opacity: 0.8;
-  transition: opacity 0.4s ease;
+.abstractBrowser {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(246, 247, 250, 0.02);
+  border: 1px solid rgba(246, 247, 250, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.imageWrap:hover .image {
-  opacity: 1;
+.browserHeader {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(246, 247, 250, 0.03);
+  border-bottom: 1px solid rgba(246, 247, 250, 0.05);
+  gap: 16px;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(246, 247, 250, 0.1);
+}
+
+.urlBar {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(246, 247, 250, 0.3);
+  letter-spacing: 0.04em;
+}
+
+.browserBody {
+  padding: 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wireHero {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wireTitle {
+  width: 60%;
+  height: 24px;
+  background: rgba(246, 247, 250, 0.1);
+  border-radius: 2px;
+}
+
+.wireText, .wireTextShort {
+  height: 8px;
+  background: rgba(246, 247, 250, 0.05);
+  border-radius: 2px;
+}
+
+.wireText { width: 100%; }
+.wireTextShort { width: 80%; }
+
+.wireGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.wireCard {
+  aspect-ratio: 3 / 4;
+  background: rgba(246, 247, 250, 0.03);
+  border: 1px solid rgba(246, 247, 250, 0.05);
+  border-radius: 4px;
+}
+
+.wireCard:nth-child(3) {
+  display: none;
+}
+
+@media (min-width: 400px) {
+  .wireGrid { grid-template-columns: repeat(3, 1fr); }
+  .wireCard:nth-child(3) { display: block; }
+}
+
+.cursorWrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.cursor {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, -10px); }
 }

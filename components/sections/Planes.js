@@ -18,7 +18,7 @@ export default function Planes() {
     <section id="planes" className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.eyebrowRow} data-rv>
-          <span>09 — Planes mensuales</span>
+          <span>10 — Planes mensuales</span>
           <span>{plansMeta.vigencia}</span>
         </div>
 
