@@ -33,7 +33,7 @@ export default function Featured() {
           {featured.rail.map((r) => {
             const piece = getPiece(r.pieceId);
             return (
-              <figure key={r.pieceId} className={styles.railItem} style={{ width: r.width }}>
+              <figure key={r.pieceId} className={styles.railItem} style={{ aspectRatio: `${r.width} / 520` }}>
                 <Image
                   src={piece.src}
                   alt={piece.alt}

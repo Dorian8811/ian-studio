@@ -61,9 +61,8 @@ export const site = {
   nav: [
     { href: "#perfil", label: "Quién soy" },
     { href: "#especialidades", label: "Especialidades" },
-    { href: "#categorias", label: "Categorías" },
+    { href: "#categorias", label: "Proyectos" },
     { href: "#vertical", label: "Vertical" },
-    { href: "#suburban", label: "Automotriz" },
     { href: "#planes", label: "Planes" },
   ],
 };

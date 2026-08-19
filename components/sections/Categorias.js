@@ -72,7 +72,7 @@ export default function Categorias() {
     <section id="categorias" className={styles.section} ref={sectionRef}>
       <div className={styles.inner}>
         <div className={styles.eyebrowRow} data-rv>
-          <span>04 — Categorías</span>
+          <span>04 — Proyectos</span>
           <span>{activeCategory.nombreCorto}</span>
         </div>
 

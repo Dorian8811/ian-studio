@@ -32,40 +32,43 @@ export default function Planes() {
 
         {/* Desktop: tres columnas */}
         <div className={styles.desktopPlans}>
-          {plans.map((p, i) => (
-            <div
-              key={p.id}
-              className={`${styles.planCol} ${p.recommended ? styles.recommended : ""} ${
-                hovered === i ? styles.hovered : ""
-              }`}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(-1)}
-              data-rv
-            >
-              {p.recommended && <div className={styles.recBar} />}
-              <div className={styles.planTop}>
-                <span className={styles.planName}>{p.name}</span>
-                {p.recommended ? (
-                  <span className={styles.recTag}>Recomendado</span>
-                ) : (
-                  <span className={styles.planNum}>{p.num}</span>
-                )}
-              </div>
-              <div className={styles.features}>
-                {p.features.map((f) => (
-                  <span key={f} className={styles.feature}>
-                    {f}
-                  </span>
-                ))}
-              </div>
-              <a
-                href={site.contact.whatsapp.href}
-                className={p.recommended ? styles.ctaButton : styles.ctaLink}
+          {plans.map((p, i) => {
+            const isActive = hovered !== -1 ? hovered === i : p.recommended;
+            return (
+              <div
+                key={p.id}
+                className={`${styles.planCol} ${isActive ? styles.recommended : ""} ${
+                  hovered === i ? styles.hovered : ""
+                }`}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(-1)}
+                data-rv
               >
-                {p.cta} {p.recommended ? "" : "→"}
-              </a>
-            </div>
-          ))}
+                {isActive && <div className={styles.recBar} />}
+                <div className={styles.planTop}>
+                  <span className={styles.planName}>{p.name}</span>
+                  {p.recommended ? (
+                    <span className={styles.recTag}>Recomendado</span>
+                  ) : (
+                    <span className={styles.planNum}>{p.num}</span>
+                  )}
+                </div>
+                <div className={styles.features}>
+                  {p.features.map((f) => (
+                    <span key={f} className={styles.feature}>
+                      {f}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={site.contact.whatsapp.href}
+                  className={isActive ? styles.ctaButton : styles.ctaLink}
+                >
+                  {p.cta} {isActive ? "" : "→"}
+                </a>
+              </div>
+            );
+          })}
         </div>
 
         {/* Mobile: control segmentado */}
