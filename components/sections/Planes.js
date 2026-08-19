@@ -33,7 +33,7 @@ export default function Planes() {
         {/* Desktop: tres columnas */}
         <div className={styles.desktopPlans}>
           {plans.map((p, i) => {
-            const isActive = hovered !== -1 ? hovered === i : p.recommended;
+            const isActive = hovered === i;
             return (
               <div
                 key={p.id}
