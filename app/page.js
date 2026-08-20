@@ -28,6 +28,10 @@ function JsonLd() {
     areaServed: "Costa Rica",
     image: `${siteUrl}/opengraph-image.jpg`,
   };
+  
+  if (site.contact.instagram) {
+    data.sameAs = [site.contact.instagram.href];
+  }
   return (
     <script
       type="application/ld+json"
@@ -52,7 +56,9 @@ export default function Home() {
           <Categorias />
         </Suspense>
         <Vertical />
-        <Featured />
+        <Suspense fallback={null}>
+          <Featured />
+        </Suspense>
         <Edicion />
         <Servicios />
         <Web />

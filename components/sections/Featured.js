@@ -1,9 +1,19 @@
+"use client";
+
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { featured } from "@/data/content";
 import { getPiece } from "@/data/portfolio";
 import styles from "./Featured.module.css";
 
 export default function Featured() {
+  const searchParams = useSearchParams();
+  const cat = searchParams?.get("categoria");
+  
+  if (cat === "gastronomia") {
+    return null;
+  }
+
   return (
     <section id="suburban" className={styles.section}>
 

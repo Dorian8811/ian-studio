@@ -36,6 +36,12 @@ export default function Contacto() {
               <span className={styles.linkLabel}>Correo</span>
               <span className={styles.linkValue}>{site.contact.email.label}</span>
             </a>
+            {site.contact.instagram && (
+              <a href={site.contact.instagram.href} target="_blank" rel="noopener noreferrer">
+                <span className={styles.linkLabel}>Instagram</span>
+                <span className={styles.linkValue}>{site.contact.instagram.label}</span>
+              </a>
+            )}
           </div>
           <a href={site.contact.whatsapp.href} className={styles.ctaButton}>
             {contacto.cta}

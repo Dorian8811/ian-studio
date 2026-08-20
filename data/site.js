@@ -22,7 +22,7 @@ export const siteUrl = parsedUrl.replace(/\/+$/, "");
 export const hasPublicUrl = Boolean(RAW_SITE_URL);
 
 /** Usuario de Instagram. Vacío hasta que se confirme el real. */
-const instagramUser = (process.env.NEXT_PUBLIC_INSTAGRAM || "").replace(/^@/, "").trim();
+const instagramUser = (process.env.NEXT_PUBLIC_INSTAGRAM || "iansolis6").replace(/^@/, "").trim();
 
 const whatsappNumber = "+506 8980-8289";
 const whatsappDigits = "50689808289";
@@ -53,7 +53,7 @@ export const site = {
     },
     /** null mientras no exista usuario confirmado: el enlace no se pinta. */
     instagram: instagramUser
-      ? { label: `@${instagramUser}`, href: `https://instagram.com/${instagramUser}` }
+      ? { label: `@${instagramUser}`, href: `https://www.instagram.com/${instagramUser}/` }
       : null,
   },
 

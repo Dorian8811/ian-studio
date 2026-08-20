@@ -107,6 +107,11 @@ export default function Nav() {
           <a href={site.contact.email.href} onClick={close}>
             {site.contact.email.label}
           </a>
+          {site.contact.instagram && (
+            <a href={site.contact.instagram.href} target="_blank" rel="noopener noreferrer" onClick={close}>
+              {site.contact.instagram.label}
+            </a>
+          )}
         </div>
       </div>
     </>
