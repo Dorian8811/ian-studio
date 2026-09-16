@@ -3,16 +3,15 @@
 import { useEffect } from "react";
 
 /**
- * Revela una sola vez los elementos [data-rv] dentro de `root` cuando
- * cruzan el 88% del viewport. Replica el comportamiento de la maqueta
+ * Revela los elementos [data-rv] dentro de `root` cuando cruzan el 88% del
+ * viewport, una sola vez cada uno. Replica el comportamiento de la maqueta
  * original: sin JS o si algo falla, un timeout de seguridad los muestra.
  * Con prefers-reduced-motion, el CSS ya los deja visibles de inmediato.
  */
 export function useReveal(root) {
   useEffect(() => {
     const scope = root && root.current ? root.current : document;
-    const els = Array.from(scope.querySelectorAll("[data-rv]"));
-    if (els.length === 0) return undefined;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // Un atributo, no una clase: React controla `className` en cada re-render
     // de la sección dueña del elemento (cualquier toggle de estado — abrir un
@@ -20,25 +19,7 @@ export function useReveal(root) {
     // por completo, borrando cualquier clase añadida a mano. `data-revealed`
     // nunca es una prop de React en estos nodos, así que sobrevive intacto.
     const show = (el) => el.setAttribute("data-revealed", "true");
-
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      els.forEach(show);
-      return undefined;
-    }
-
-    // Cualquier elemento ya pintado dentro del viewport inicial se muestra
-    // de inmediato. Usar un factor <1 aquí (como 0.92) deja un hueco entre
-    // este chequeo y el rootMargin del IntersectionObserver de abajo: los
-    // elementos que caen en ese hueco nunca se revelan si el usuario no
-    // hace scroll. Comparar contra innerHeight completo lo cierra.
-    els.forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight) show(el);
-    });
-
-    const pending = els.filter((el) => el.getAttribute("data-revealed") !== "true");
-    if (pending.length === 0) return undefined;
+    const isRevealed = (el) => el.getAttribute("data-revealed") === "true";
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -51,12 +32,50 @@ export function useReveal(root) {
       },
       { rootMargin: "0px 0px -12% 0px", threshold: 0.08 }
     );
-    pending.forEach((el) => io.observe(el));
 
-    const safety = setTimeout(() => pending.forEach(show), 4000);
+    // Cualquier elemento ya pintado dentro del viewport se muestra de
+    // inmediato; el resto se observa para revelarlo al hacer scroll.
+    // Comparar contra innerHeight completo (no un factor <1) evita un hueco
+    // entre este chequeo y el rootMargin del IntersectionObserver — un
+    // elemento que cayera en ese hueco nunca se revelaría sin scroll.
+    const track = (el) => {
+      if (isRevealed(el)) return;
+      if (reduce) {
+        show(el);
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) show(el);
+      else io.observe(el);
+    };
+
+    Array.from(scope.querySelectorAll("[data-rv]")).forEach(track);
+
+    // Secciones que se ocultan condicionalmente (p. ej. Metal en movimiento
+    // al filtrar por Gastronomía) se desmontan y vuelven a montar — React
+    // crea nodos nuevos que este observer nunca vio. Sin este observer, esos
+    // nodos se quedan en opacity:0 para siempre: el espacio sigue
+    // reservado mientras el contenido es invisible, un hueco negro fantasma.
+    const mo = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType !== 1) return;
+          if (node.matches?.("[data-rv]")) track(node);
+          node.querySelectorAll?.("[data-rv]").forEach(track);
+        });
+      }
+    });
+    mo.observe(scope === document ? document.body : scope, { childList: true, subtree: true });
+
+    const safety = setTimeout(() => {
+      scope.querySelectorAll("[data-rv]").forEach((el) => {
+        if (!isRevealed(el)) show(el);
+      });
+    }, 4000);
 
     return () => {
       io.disconnect();
+      mo.disconnect();
       clearTimeout(safety);
     };
   }, [root]);
