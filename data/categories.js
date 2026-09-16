@@ -1,14 +1,15 @@
 /**
- * Arquitectura completa de las seis categorías del portafolio.
+ * Arquitectura completa de las siete categorías del portafolio.
  *
  * La visibilidad pública es un dato, no una decisión de componente: para
  * publicar una categoría basta con poner `visible: true` (y que tenga
  * `minPiezas` fotografías reales). Nada más hay que tocar.
  *
- * Estado de lanzamiento — agosto 2026:
+ * Estado — septiembre 2026:
  *   todo        visible   selección curada entre disciplinas
  *   gastronomia visible   5 piezas
  *   automotriz  visible   7 piezas
+ *   perfumeria  visible   5 piezas (producto y lifestyle)
  *   espacios    oculta    solo existen el antes y el después del mismo baño;
  *                         como galería independiente sería contenido
  *                         duplicado. Vive en la sección 07 — Edición.
@@ -53,6 +54,17 @@ export const categories = [
     visible: true,
     agregada: false,
     portada: "auto-porsche-gt3rs",
+  },
+  {
+    id: "perfumeria",
+    slug: "perfumeria",
+    nombre: "Perfumería",
+    nombreCorto: "Perfumería",
+    descripcion: "Producto y lifestyle",
+    metadato: "Producto y lifestyle",
+    visible: true,
+    agregada: false,
+    portada: "perfume-jpg-frasco-rojo",
   },
   {
     id: "espacios",
