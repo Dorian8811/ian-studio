@@ -5,8 +5,9 @@
   background: rgba(0, 0, 0, 0.97);
   display: flex;
   flex-direction: column;
-  animation: fade-in 0.3s ease;
-  touch-action: none;
+  animation: fade-in 0.24s var(--ease-out);
+  /* El swipe horizontal lo maneja JS; el pellizco para ampliar queda libre. */
+  touch-action: pan-y pinch-zoom;
 }
 
 .topBar {
@@ -35,17 +36,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(246, 247, 250, 0.2);
   border-radius: 2px;
   color: var(--color-white);
-  font-size: 16px;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s ease, transform 160ms var(--ease-out);
 }
 
-.closeBtn:hover {
-  border-color: var(--w);
+.closeBtn:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .closeBtn:hover {
+    border-color: var(--w);
+  }
 }
 
 .stage {
@@ -70,6 +76,39 @@
   object-fit: contain;
 }
 
+/* Cada foto entra desde el lado hacia el que se avanza. La apertura
+   (direction 0) solo se aclara: el overlay ya trae su fundido. */
+.frame[data-direction="1"],
+.frame[data-direction="-1"] {
+  animation: lb-in 320ms var(--ease-out) both;
+}
+
+.frame[data-direction="-1"] {
+  --lb-from: -28px;
+}
+
+@keyframes lb-in {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--lb-from, 28px), 0, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Vecinas precargadas: fuera de pantalla pero cargadas (no display:none,
+   que algunos navegadores tratan como "no hace falta"). */
+.preload {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .frame.lowRes {
   max-width: 480px;
   max-height: 60vh;
@@ -90,12 +129,17 @@
   color: var(--color-white);
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
-  font-size: 18px;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.navBtn:hover {
-  border-color: var(--w);
+.navBtn:active {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navBtn:hover {
+    border-color: var(--w);
+  }
 }
 
 .navBtn.prev { left: clamp(8px, 2vw, 24px); }
@@ -122,7 +166,12 @@
   font-size: 9.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.4);
+  color: rgba(246, 247, 250, 0.56);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -21,7 +21,7 @@
   font-size: 9px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.36);
+  color: rgba(246, 247, 250, 0.5);
   padding-bottom: 22px;
 }
 
@@ -82,7 +82,7 @@
   font-size: 9.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.42);
+  color: rgba(246, 247, 250, 0.56);
 }
 
 @media (min-width: 1024px) {
@@ -107,7 +107,7 @@
   font-size: 9.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.42);
+  color: rgba(246, 247, 250, 0.56);
 }
 
 @media (min-width: 1024px) {

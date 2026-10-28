@@ -47,21 +47,35 @@ components/
   layout/             Nav, menú móvil, motor de motion global
   sections/            Las 11 secciones de la landing
   portfolio/           Filtro de categorías, galería editorial, lightbox
-  ui/                  Piezas reutilizables (comparador antes/después)
+  ui/                  Piezas reutilizables (íconos, comparador, reel)
 hooks/                 Reveal, parallax, scroll lock, focus trap, media queries
 data/                  Fuente única de verdad de todo el contenido y precios
-lib/                   Motor de composición editorial de la galería
+lib/                   Composición de la galería y placeholders borrosos
 public/images/         Fotografías de producción (nombres normalizados)
-scripts/build-assets.mjs   Genera public/images + iconos + OG desde _design/
+scripts/build-assets.mjs   Genera public/images + iconos + OG + placeholders
+scripts/build-videos.mjs   Genera los reels AV1 + H.264 y sus posters
 _design/               Maqueta original de Claude Design — solo referencia
 ```
 
+## Masters del Drive
+
+Los originales que entrega Ian viven en su carpeta compartida de Google
+Drive. Se copian a `_design/uploads/drive/` (privado, fuera de Git) con
+nombres en minúsculas-con-guiones — `img-1-automotriz.png`,
+`reel-1.mp4`, etc. — y los dos scripts de abajo generan todo lo que se
+publica a partir de ahí. Nunca se edita a mano un archivo de `public/`.
+
 ## Cómo añadir una fotografía nueva
 
-1. Copia el archivo a `_design/uploads/` (o donde tengas el original).
+1. Copia el master a `_design/uploads/drive/`.
 2. Añade una entrada en `scripts/build-assets.mjs` → arreglo `PHOTOS`
-   (`{ from, to }`, con `to` en minúsculas-con-guiones).
-3. Corre `npm run assets` — copia y optimiza el archivo a `public/images/`.
+   (`{ from, to, mode }`, con `to` en minúsculas-con-guiones). El modo
+   decide cómo se guarda la fuente, siempre sin perder calidad:
+   - `lossless` para PNG sin pérdida → WebP lossless (píxel idéntico).
+   - `camera` para JPEG de cámara → lado largo 3840 px, JPEG q95 4:4:4.
+   - `copy` cuando no hay master: copia los bytes tal cual.
+3. Corre `npm run assets` — escribe `public/images/`, el inventario y los
+   placeholders borrosos (`data/blur.json`).
 4. Añade la pieza a `data/portfolio.js` con sus dimensiones reales
    (`width`/`height` — así el layout reserva el espacio sin saltos), su
    `categoria`, `orientacion` y el resto de metadatos.
@@ -73,34 +87,30 @@ de "Todo" leen siempre de `data/portfolio.js`.
 
 ## Cómo añadir un reel de video nuevo
 
-Los archivos de cámara vienen a bitrates muy altos (~20 Mbps) — hay que
-comprimirlos antes de publicarlos. Con [ffmpeg](https://ffmpeg.org) instalado:
+Necesitas [ffmpeg](https://ffmpeg.org) con `libsvtav1` y `libx264`.
 
-```bash
-ffmpeg -i original.mp4 \
-  -c:v libx264 -preset slow -crf 24 -maxrate 3200k -bufsize 6400k -pix_fmt yuv420p \
-  -c:a aac -b:a 96k -ac 2 \
-  -movflags +faststart \
-  public/videos/reel-03.mp4
-```
+1. Copia el master a `_design/uploads/drive/`.
+2. Añade una entrada en `scripts/build-videos.mjs` → arreglo `REELS`
+   (`{ id, from, poster }`, donde `poster` es el segundo exacto del
+   fotograma de portada).
+3. Corre `npm run videos` (o `npm run videos -- reel-06` para uno solo).
+   Genera dos archivos por reel — `reel-06.av1.mp4` (AV1 10 bits, fuente
+   principal) y `reel-06.mp4` (H.264, respaldo para dispositivos sin AV1)
+   — más `public/images/reel-06-poster.jpg` desde el master. Los masters
+   4K se reducen a 1080×1920.
+4. Añade la pieza a `verticalSlides` en `data/content.js` con
+   `sources: reelSources("reel-06")`, `poster`, `categoria` y `duracion`.
 
-Luego genera el poster (fotograma de portada, se ve mientras el video carga):
+El rótulo "Reel 01…" y el contador ("01 / 05") salen de la posición en el
+arreglo — no hay que tocar el componente.
 
-```bash
-ffmpeg -ss 3 -i public/videos/reel-03.mp4 -frames:v 1 -q:v 2 poster-raw.jpg
-```
-
-Procesa ese JPG con la misma calidad que el resto de fotos (ver
-`scripts/build-assets.mjs`) y guárdalo como `public/images/reel-03-poster.jpg`.
-
-Añade la pieza a `verticalSlides` en `data/content.js` con `type: "video"`,
-`src` (el mp4), `poster`, `width`/`height` reales del video y `duracion`.
-El contador de la sección ("01 / 03", etc.) se ajusta solo según cuántos
-reels haya en el arreglo — no hay que tocar el componente.
+Calidad medida con VMAF contra el master (≥ 95 se considera
+indistinguible): AV1 crf 24 → 97.4, H.264 crf 20 → 96.4. El encode
+anterior (H.264 crf 24) daba 93.9.
 
 ## Cómo activar una categoría
 
-Las seis categorías completas ya existen en `data/categories.js`. Para
+Todas las categorías ya existen en `data/categories.js`. Para
 publicar una que hoy está oculta (Espacios, Detrás de cámara, Contenido):
 
 1. Asegúrate de tener al menos 3 piezas reales en `data/portfolio.js` para

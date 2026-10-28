@@ -39,7 +39,7 @@ export const site = {
   title: "Ian Studio — Fotografía, video y contenido en Costa Rica",
   shortTitle: "Ian Studio",
   description:
-    "Fotografía, video vertical y contenido mensual para negocios y marcas personales en Costa Rica. Gastronomía, espacios y automotriz.",
+    "Fotografía, video vertical y contenido mensual para negocios y marcas personales en Costa Rica. Gastronomía, automotriz, producto, espacios y eventos.",
 
   contact: {
     whatsapp: {

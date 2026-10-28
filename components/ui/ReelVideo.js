@@ -1,19 +1,36 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Icon from "@/components/ui/Icon";
 import styles from "./ReelVideo.module.css";
 
 /**
- * Video de reel: silencioso y en loop mientras está a la vista, con un
- * botón para activar el sonido. `active`, si se pasa, exige además esa
- * condición para reproducir (el carrusel desktop solo reproduce la pieza
- * centrada); si se omite, basta con estar en el viewport (rieles móviles
- * con scroll-snap nativo, sin estado de carrusel).
+ * Video de reel: silencioso y en loop mientras está a la vista, con
+ * controles para pausar y activar el sonido. `active`, si se pasa, exige
+ * además esa condición para reproducir (el carrusel desktop solo reproduce
+ * la pieza centrada); si se omite, basta con estar en el viewport (rieles
+ * móviles con scroll-snap nativo, sin estado de carrusel).
+ *
+ * `sources` va en orden de preferencia (AV1 → H.264): el navegador elige la
+ * primera que puede decodificar.
+ *
+ * Con prefers-reduced-motion no arranca solo: queda el poster y el botón de
+ * reproducir. La pausa manual se respeta hasta que el visitante la quite.
  */
-export default function ReelVideo({ src, poster, alt, active, priority = false }) {
+export default function ReelVideo({ sources, poster, alt, active, priority = false }) {
   const videoRef = useRef(null);
   const [muted, setMuted] = useState(true);
   const [inView, setInView] = useState(false);
+  // Cerca del viewport (600px). Hasta entonces preload="none": Chrome trata
+  // "metadata" como permiso para bufferizar varios MB, y con cinco reels
+  // (más la copia oculta del riel móvil) la home bajaba ~26 MB de video sin
+  // que nadie hubiera llegado a la sección.
+  const [near, setNear] = useState(false);
+  // Estado real del <video>, sincronizado con sus eventos play/pause.
+  const [paused, setPaused] = useState(true);
+  // null = automático (autoplay salvo reduced-motion); "play" | "pause" =
+  // lo que pidió el visitante con el botón.
+  const [intent, setIntent] = useState(null);
 
   useEffect(() => {
     const el = videoRef.current;
@@ -21,54 +38,79 @@ export default function ReelVideo({ src, poster, alt, active, priority = false }
     const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
       threshold: 0.6,
     });
+    const nearIo = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setNear(true);
+        nearIo.disconnect();
+      },
+      { rootMargin: "600px" }
+    );
     io.observe(el);
-    return () => io.disconnect();
+    nearIo.observe(el);
+    return () => {
+      io.disconnect();
+      nearIo.disconnect();
+    };
   }, []);
 
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
-    const shouldPlay = inView && active !== false;
-    if (shouldPlay) el.play().catch(() => {});
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wantsPlay = intent === "play" || (intent === null && !reduce);
+    if (inView && active !== false && wantsPlay) el.play().catch(() => {});
     else el.pause();
-  }, [inView, active]);
+  }, [inView, active, intent]);
+
+  const togglePlay = (e) => {
+    e.stopPropagation();
+    setIntent(paused ? "play" : "pause");
+  };
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    setMuted((m) => !m);
+  };
 
   return (
     <>
       <video
         ref={videoRef}
         className={styles.video}
-        src={src}
         poster={poster}
         muted={muted}
         loop
         playsInline
-        preload={priority ? "auto" : "metadata"}
+        preload={near ? (priority ? "auto" : "metadata") : "none"}
         aria-label={alt}
-      />
-      <button
-        type="button"
-        className={styles.muteBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setMuted((m) => !m);
-        }}
-        aria-label={muted ? "Activar sonido" : "Silenciar"}
-        aria-pressed={!muted}
+        onPlay={() => setPaused(false)}
+        onPause={() => setPaused(true)}
       >
-        {muted ? (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <path d="M4 9v6h4l5 5V4L8 9H4Z" />
-            <path d="M16 9.5 20.5 14M20.5 9.5 16 14" />
-          </svg>
-        ) : (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <path d="M4 9v6h4l5 5V4L8 9H4Z" />
-            <path d="M17 8.5a5 5 0 0 1 0 7" />
-            <path d="M19.5 6a8.5 8.5 0 0 1 0 12" />
-          </svg>
-        )}
-      </button>
+        {sources.map((s) => (
+          <source key={s.src} src={s.src} type={s.type} />
+        ))}
+      </video>
+
+      <div className={styles.controls}>
+        <button
+          type="button"
+          className={styles.ctrlBtn}
+          onClick={togglePlay}
+          aria-label={paused ? "Reproducir reel" : "Pausar reel"}
+        >
+          <Icon name={paused ? "play" : "pause"} size={15} />
+        </button>
+        <button
+          type="button"
+          className={styles.ctrlBtn}
+          onClick={toggleMute}
+          aria-label={muted ? "Activar sonido" : "Silenciar"}
+          aria-pressed={!muted}
+        >
+          <Icon name={muted ? "sound-off" : "sound-on"} size={15} />
+        </button>
+      </div>
     </>
   );
 }

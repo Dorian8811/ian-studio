@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { contacto } from "@/data/content";
 import { site } from "@/data/site";
+import Icon from "@/components/ui/Icon";
 import styles from "./Contacto.module.css";
 
 export default function Contacto() {
@@ -45,8 +46,8 @@ export default function Contacto() {
           </div>
           <a href={site.contact.whatsapp.href} className={styles.ctaButton}>
             {contacto.cta}
-            <span aria-hidden="true" style={{ fontFamily: "var(--font-mono)" }}>
-              ↗
+            <span className={styles.ctaIcon}>
+              <Icon name="arrow-up-right" size={16} />
             </span>
           </a>
         </div>

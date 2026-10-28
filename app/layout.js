@@ -40,6 +40,8 @@ export const metadata = {
     "contenido para redes",
     "fotografía automotriz",
     "fotografía gastronómica",
+    "fotografía de eventos",
+    "fotografía de producto",
     "Costa Rica",
     "reels",
     "contenido mensual",

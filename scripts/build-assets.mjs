@@ -9,6 +9,23 @@
  *   node scripts/build-assets.mjs
  *
  * Es idempotente: se puede ejecutar tantas veces como haga falta.
+ *
+ * Calidad: `public/images` guarda la FUENTE que next/image convierte a
+ * AVIF/WebP en cada tamaño. El visitante nunca descarga este archivo, así
+ * que aquí no se ahorra peso a costa de calidad:
+ *
+ *   lossless  master PNG sin pérdida → WebP lossless (píxel idéntico, ~30 %
+ *             más liviano que el PNG).
+ *   camera    JPEG de cámara (Canon R50, hasta 6000 px) → lado largo 3840
+ *             (el `deviceSize` máximo de next/image), JPEG q95 4:4:4.
+ *   copy      sin master disponible: se copian los bytes originales tal
+ *             cual. Re-encodarlos solo sumaría una generación de pérdida.
+ *
+ * Nada de upscale artificial: un archivo de baja resolución se marca como
+ * `resolucion: "baja"` en data/portfolio.js y el layout lo limita.
+ *
+ * Las fotos de Perfumería se añadieron ya optimizadas (1600 px desde
+ * capturas de 3368×6000) y no tienen master en el Drive; no pasan por aquí.
  */
 
 import { mkdir, readdir, writeFile, copyFile } from "node:fs/promises";
@@ -20,29 +37,41 @@ import sharp from "sharp";
 const ROOT = path.resolve(fileURLToPath(new URL("../", import.meta.url)));
 const DESIGN_IMG = path.join(ROOT, "_design", "img");
 const UPLOADS = path.join(ROOT, "_design", "uploads");
+/** Masters del Drive de Ian (carpeta compartida, ver README). */
+const DRIVE = path.join(UPLOADS, "drive");
 const OUT_IMG = path.join(ROOT, "public", "images");
 const OUT_APP = path.join(ROOT, "app");
 
-/** Fotografías aprobadas: origen en la maqueta -> nombre de producción. */
+const MAX_EDGE = 3840;
+
+const drive = (f) => path.join(DRIVE, f);
+const design = (f) => path.join(DESIGN_IMG, f);
+
+/** Fotografías aprobadas: origen -> nombre de producción y modo. */
 const PHOTOS = [
   // Automotriz
-  { from: "auto-1.jpg", to: "auto-porsche-gt3rs.jpg" },
-  { from: "auto-2.jpg", to: "auto-shelby-gt500.jpg" },
-  { from: "auto-3.jpg", to: "auto-mclaren-675lt.jpg" },
-  { from: "suburban-1.jpg", to: "auto-amg-black-series.jpg" },
-  { from: "suburban-2.jpg", to: "auto-bmw-m4-csl.jpg" },
-  { from: "suburban-3.jpg", to: "auto-ferrari-sf90.jpg" },
-  { from: "suburban-4.jpg", to: "auto-amg-gt-rojo.jpg" },
+  { from: drive("img-1-automotriz.png"), to: "auto-porsche-gt3rs.webp", mode: "lossless" },
+  { from: drive("img-2-automotriz.png"), to: "auto-shelby-gt500.webp", mode: "lossless" },
+  { from: drive("img-3-automotriz.png"), to: "auto-mclaren-675lt.webp", mode: "lossless" },
+  { from: design("suburban-1.jpg"), to: "auto-amg-black-series.jpg", mode: "copy" },
+  { from: design("suburban-2.jpg"), to: "auto-bmw-m4-csl.jpg", mode: "copy" },
+  { from: design("suburban-3.jpg"), to: "auto-ferrari-sf90.jpg", mode: "copy" },
+  { from: design("suburban-4.jpg"), to: "auto-amg-gt-rojo.jpg", mode: "copy" },
   // Gastronomía
-  { from: "food-1.jpg", to: "food-spaghetti-albondigas.jpg" },
-  { from: "food-2.jpg", to: "food-preparacion-cocina.jpg" },
-  { from: "food-3.jpg", to: "food-bandeja-carne-mechada.jpg" },
-  { from: "food-5.jpg", to: "food-lasana-vino.jpg" },
+  { from: drive("img-1-gastronomico.png"), to: "food-spaghetti-albondigas.webp", mode: "lossless" },
+  { from: drive("img-2-gastronomico.png"), to: "food-preparacion-cocina.webp", mode: "lossless" },
+  { from: drive("img-3-gastronomico.png"), to: "food-bandeja-carne-mechada.webp", mode: "lossless" },
+  { from: drive("img-4-gastronomico.jpg"), to: "food-albondigas-plato.jpg", mode: "camera" },
+  { from: drive("img-5-gastronomia.png"), to: "food-lasana-vino.webp", mode: "lossless" },
+  // Eventos
+  { from: drive("img-6322.jpg"), to: "eventos-escenario-humo.jpg", mode: "camera" },
+  { from: drive("img-6324.jpg"), to: "eventos-escenario-rojo.jpg", mode: "camera" },
+  { from: drive("img-6326.png"), to: "eventos-guitarra-acustica.webp", mode: "lossless" },
   // Espacios
-  { from: "edit-before.jpg", to: "espacio-bano-antes.jpg" },
-  { from: "edit-after.jpg", to: "espacio-bano-despues.jpg" },
+  { from: design("edit-before.jpg"), to: "espacio-bano-antes.jpg", mode: "copy" },
+  { from: design("edit-after.jpg"), to: "espacio-bano-despues.jpg", mode: "copy" },
   // Detrás de cámara
-  { from: "services-a.jpg", to: "bts-camara-gimbal.jpg" },
+  { from: design("services-a.jpg"), to: "bts-camara-gimbal.jpg", mode: "copy" },
 ];
 
 /** El logo se usa en cabecera y pie, siempre sobre negro. */
@@ -51,58 +80,48 @@ const LOGO_SRC = path.join(DESIGN_IMG, "logo.png");
 /** Master cuadrado 1254x1254 del logo, fuente de los iconos. */
 const ICON_SRC = path.join(UPLOADS, "pasted-1787022154039-0.png");
 
-/** Original de alta resolución de la gastronomía destacada (3974x4968). */
-async function findFoodMaster() {
-  const dir = path.join(UPLOADS, "Imagenes Ian pagina");
-  if (!existsSync(dir)) return null;
-  const files = await readdir(dir);
-  const hit = files.find(
-    (f) => /^IMG\s*4\s+GASTRONOMICO\.jpe?g$/i.test(f.trim()) || /^IMG\s+4\s{2}GASTRONOMICO\.jpg$/i.test(f)
-  );
-  return hit ? path.join(dir, hit) : null;
-}
+/** McLaren 675LT sin pérdida: fuente del crop de Open Graph. */
+const OG_SRC = drive("img-3-automotriz.png");
 
 const log = (...a) => console.log("  ", ...a);
+
+async function writePhoto({ from, to, mode }) {
+  const dst = path.join(OUT_IMG, to);
+
+  if (mode === "copy") {
+    await copyFile(from, dst);
+    return;
+  }
+
+  // `.rotate()` aplica la orientación EXIF antes de soltar la metadata.
+  const img = sharp(from).rotate();
+
+  if (mode === "lossless") {
+    await img.webp({ lossless: true, effort: 6 }).toFile(dst);
+    return;
+  }
+
+  // camera
+  await img
+    .resize({ width: MAX_EDGE, height: MAX_EDGE, fit: "inside", withoutEnlargement: true, kernel: "lanczos3" })
+    .jpeg({ quality: 95, progressive: true, mozjpeg: true, chromaSubsampling: "4:4:4" })
+    .toFile(dst);
+}
 
 async function main() {
   await mkdir(OUT_IMG, { recursive: true });
 
   // ---------------------------------------------------------------- fotos
   console.log("\nFotografías → public/images");
-  for (const { from, to } of PHOTOS) {
-    const src = path.join(DESIGN_IMG, from);
-    if (!existsSync(src)) {
-      log(`! falta ${from} — se omite`);
+  for (const photo of PHOTOS) {
+    if (!existsSync(photo.from)) {
+      log(`! falta ${path.relative(ROOT, photo.from)} — se omite ${photo.to}`);
       continue;
     }
-    const dst = path.join(OUT_IMG, to);
-    // Se re-encodan sin reescalar: mismo píxel, JPEG progresivo optimizado.
-    // Nada de upscale artificial (los originales de baja resolución se
-    // mantienen tal cual y el layout los limita).
-    const meta = await sharp(src).metadata();
-    await sharp(src)
-      .jpeg({ quality: 92, progressive: true, mozjpeg: true, chromaSubsampling: "4:4:4" })
-      .toFile(dst);
-    log(`${from} → ${to}  (${meta.width}×${meta.height})`);
-  }
-
-  // Gastronomía destacada desde el master de 3974×4968.
-  const master = await findFoodMaster();
-  const foodOut = path.join(OUT_IMG, "food-albondigas-plato.jpg");
-  if (master) {
-    const meta = await sharp(master).metadata();
-    await sharp(master)
-      .resize({ width: 2000, withoutEnlargement: true })
-      .jpeg({ quality: 90, progressive: true, mozjpeg: true, chromaSubsampling: "4:4:4" })
-      .toFile(foodOut);
-    const out = await sharp(foodOut).metadata();
-    log(`master gastronomía (${meta.width}×${meta.height}) → food-albondigas-plato.jpg (${out.width}×${out.height})`);
-  } else {
-    const fallback = path.join(DESIGN_IMG, "food-4.jpg");
-    if (existsSync(fallback)) {
-      await sharp(fallback).jpeg({ quality: 92, progressive: true, mozjpeg: true }).toFile(foodOut);
-      log("master no encontrado — se usa food-4.jpg de la maqueta");
-    }
+    await writePhoto(photo);
+    const src = await sharp(photo.from).metadata();
+    const out = await sharp(path.join(OUT_IMG, photo.to)).metadata();
+    log(`${photo.mode.padEnd(8)} ${path.basename(photo.from)} (${src.width}×${src.height}) → ${photo.to} (${out.width}×${out.height})`);
   }
 
   // ----------------------------------------------------------------- logo
@@ -122,7 +141,7 @@ async function main() {
   // Crop horizontal fuerte del McLaren 675LT: frontal, faro y splitter de
   // carbono. El original vertical NO se sobrescribe.
   console.log("\nOpen Graph");
-  const ogSrc = path.join(DESIGN_IMG, "auto-3.jpg");
+  const ogSrc = existsSync(OG_SRC) ? OG_SRC : design("auto-3.jpg");
   const ogMeta = await sharp(ogSrc).metadata();
   const bandH = Math.round(ogMeta.width / (1200 / 630)); // banda con el ratio de OG
   const bandTop = Math.min(Math.max(0, 660), ogMeta.height - bandH);
@@ -155,12 +174,12 @@ async function main() {
       { input: scrim, top: 0, left: 0 },
       { input: logoBadge, top: 630 - 96 - 56, left: 64 },
     ])
-    .jpeg({ quality: 88, progressive: true, mozjpeg: true })
+    .jpeg({ quality: 92, progressive: true, mozjpeg: true, chromaSubsampling: "4:4:4" })
     .toFile(path.join(OUT_APP, "opengraph-image.jpg"));
   log(`app/opengraph-image.jpg 1200×630 (banda ${ogMeta.width}×${bandH} desde y=${bandTop})`);
 
   // ------------------------------------------------------- inventario JSON
-  const files = (await readdir(OUT_IMG)).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort();
+  const files = (await readdir(OUT_IMG)).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort();
   const inventory = [];
   for (const f of files) {
     const m = await sharp(path.join(OUT_IMG, f)).metadata();
@@ -168,8 +187,20 @@ async function main() {
   }
   await writeFile(path.join(ROOT, "scripts", "image-inventory.json"), JSON.stringify(inventory, null, 2) + "\n", "utf8");
 
+  // -------------------------------------------------- placeholders (LQIP)
+  // 12 px de ancho en WebP: ~150 bytes por foto. next/image lo amplía con
+  // desenfoque mientras carga la imagen real. El logo no lo necesita.
+  const blur = {};
+  for (const f of files) {
+    if (f === "logo.png") continue;
+    const buf = await sharp(path.join(OUT_IMG, f)).resize({ width: 12 }).webp({ quality: 40 }).toBuffer();
+    blur[`/images/${f}`] = `data:image/webp;base64,${buf.toString("base64")}`;
+  }
+  await writeFile(path.join(ROOT, "data", "blur.json"), JSON.stringify(blur, null, 2) + "\n", "utf8");
+  console.log(`\nPlaceholders: data/blur.json (${Object.keys(blur).length} imágenes)`);
+
   console.log("\nInventario:");
-  for (const i of inventory) console.log(`   ${i.file.padEnd(34)} ${i.width}×${i.height}`);
+  for (const i of inventory) console.log(`   ${i.file.padEnd(36)} ${i.width}×${i.height}`);
   console.log("\nListo.\n");
 }
 

@@ -36,6 +36,7 @@ export default function Perfil() {
                 alt={perfil.retrato.alt}
                 fill
                 sizes="(min-width: 1024px) 380px, 100vw"
+                quality={90}
               />
             </div>
             <div className={styles.portraitCaption}>

@@ -45,6 +45,7 @@ export default function Especialidades() {
                   alt={s.alt}
                   fill
                   sizes="(min-width: 1024px) 30vw, 0px"
+                  quality={90}
                   style={{ objectFit: "cover", objectPosition: s.objectPosition }}
                 />
               </div>
@@ -61,7 +62,7 @@ export default function Especialidades() {
           {specialties.map((s) => (
             <div key={s.num} className={styles.mobileItem} data-rv>
               <div className={styles.mobileFrame}>
-                <Image src={s.image} alt={s.alt} fill sizes="100vw" style={{ objectPosition: s.objectPosition }} />
+                <Image src={s.image} alt={s.alt} fill sizes="100vw" quality={90} style={{ objectPosition: s.objectPosition }} />
                 <div className={styles.mobileLabel}>
                   <span className={styles.mobileNum}>{s.num}</span>
                   <span className={styles.mobileName}>{s.name}</span>

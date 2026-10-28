@@ -54,6 +54,17 @@ export default function Categorias() {
 
   const pieces = useMemo(() => piecesFor(active), [active]);
 
+  // La galería entra escalonada solo al CAMBIAR de categoría (chip,
+  // back/forward), nunca en la carga inicial. Estado ajustado durante el
+  // render, sin efectos: es el patrón que recomienda React para derivar de
+  // un valor anterior.
+  const [prevActive, setPrevActive] = useState(active);
+  const [animateGallery, setAnimateGallery] = useState(false);
+  if (prevActive !== active) {
+    setPrevActive(active);
+    setAnimateGallery(true);
+  }
+
   const openLightbox = useCallback((i) => setLightbox({ category: active, index: i }), [active]);
   const closeLightbox = useCallback(() => setLightbox({ category: null, index: -1 }), []);
   const nextLightbox = useCallback(
@@ -90,7 +101,14 @@ export default function Categorias() {
 
         <CategoryFilter categories={visibleCategories} active={active} onSelect={selectCategory} />
 
-        <Gallery pieces={pieces} onOpen={openLightbox} panelId={`panel-${active}`} />
+        <Gallery
+          key={active}
+          pieces={pieces}
+          onOpen={openLightbox}
+          panelId={`panel-${active}`}
+          tabId={`tab-${active}`}
+          animate={animateGallery}
+        />
       </div>
 
       {isLightboxOpen && (

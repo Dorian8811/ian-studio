@@ -21,7 +21,7 @@
   font-size: 9px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.36);
+  color: rgba(246, 247, 250, 0.5);
   padding-bottom: 22px;
 }
 
@@ -85,7 +85,7 @@
   line-height: 1.8;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.36);
+  color: rgba(246, 247, 250, 0.5);
 }
 
 .row {
@@ -131,29 +131,40 @@
 }
 
 .rowPlus {
-  font-family: var(--font-mono);
-  font-size: 18px;
-  color: rgba(246, 247, 250, 0.4);
-  transition: transform 0.55s var(--ease-out);
+  display: inline-flex;
+  align-self: center;
+  color: rgba(246, 247, 250, 0.5);
+  transition: transform 0.55s var(--ease-out), color 0.35s ease;
   flex: none;
 }
 
 .row.open .rowPlus {
   transform: rotate(45deg);
+  color: var(--w);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .rowHead:hover .rowPlus {
+    color: var(--color-white);
+  }
+}
+
+/* Acordeón por filas de grid (0fr → 1fr): anima hasta la altura real del
+   contenido, sin un max-height adivinado que corte o retrase el cierre. */
 .panel {
-  overflow: hidden;
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
-  transition: max-height 0.65s var(--ease-out), opacity 0.5s ease;
+  transition: grid-template-rows 0.6s var(--ease-out), opacity 0.4s ease;
+}
+
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .row.open .panel {
-  /* Suficiente para el texto + tags en desktop y, en mobile, también la
-     vista previa inline (16:10) — el contenido real nunca llega a esto,
-     solo evita que el tope corte la descripción. */
-  max-height: 480px;
+  grid-template-rows: 1fr;
   opacity: 1;
 }
 

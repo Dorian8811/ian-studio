@@ -47,13 +47,46 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: opacity 0.4s var(--ease-ui), transform 0.4s var(--ease-ui);
+  transition: opacity 0.4s var(--ease-ui), transform 0.6s var(--ease-out);
 }
 
-.figure:hover .frame img,
+/* Hover solo con puntero fino: en touch el tap dispararía un hover falso
+   justo antes de abrir el visor. */
+@media (hover: hover) and (pointer: fine) {
+  .figure:hover .frame img {
+    opacity: 0.92;
+    transform: scale(1.025);
+  }
+}
+
 .figure:focus-visible .frame img {
   opacity: 0.92;
-  transform: scale(1.02);
+}
+
+.figure:active .frame {
+  transform: scale(0.985);
+}
+
+.frame {
+  transition: transform 160ms var(--ease-out);
+}
+
+/* Entrada escalonada al cambiar de categoría. Keyframes y no transición:
+   cada cambio remonta la galería, así que siempre arranca desde cero. */
+.animate .cell {
+  animation: cell-in 560ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * 50ms);
+}
+
+@keyframes cell-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .scrim {
@@ -100,7 +133,7 @@
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.42);
+  color: rgba(246, 247, 250, 0.56);
   text-align: right;
   white-space: nowrap;
 }
@@ -112,6 +145,6 @@
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.4);
+  color: rgba(246, 247, 250, 0.56);
 }
 

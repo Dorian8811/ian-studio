@@ -5,11 +5,13 @@ import Image from "next/image";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
+import Icon from "@/components/ui/Icon";
 import { site } from "@/data/site";
 import styles from "./Nav.module.css";
 
 export default function Nav() {
-  const { progress, scrolled } = useScrollProgress();
+  const progressRef = useRef(null);
+  const { scrolled } = useScrollProgress(progressRef);
   const [menuOpen, setMenuOpen] = useState(false);
   const overlayRef = useRef(null);
 
@@ -21,11 +23,11 @@ export default function Nav() {
   return (
     <>
       <div
+        ref={progressRef}
         className={styles.progress}
-        style={{ width: `${progress}%` }}
         role="progressbar"
         aria-label="Progreso de lectura"
-        aria-valuenow={Math.round(progress)}
+        aria-valuenow={0}
         aria-valuemin={0}
         aria-valuemax={100}
       />
@@ -33,7 +35,7 @@ export default function Nav() {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
         <div className={styles.bar}>
           <a href="#top" className={styles.brand}>
-            <Image src="/images/logo.png" alt={site.name} width={94} height={77} priority />
+            <Image src="/images/logo.png" alt={site.name} width={94} height={77} loading="eager" />
             <span className={styles.brandText}>
               <span className={styles.wordmark}>IAN STUDIO</span>
               <span className={styles.sublabel}>{site.tagline.toUpperCase()}</span>
@@ -85,7 +87,8 @@ export default function Nav() {
       >
         <Image src="/images/logo.png" alt={site.name} width={78} height={64} className={styles.overlayLogo} />
         <button type="button" className={styles.overlayClose} onClick={close}>
-          Cerrar ✕
+          Cerrar
+          <Icon name="close" size={14} />
         </button>
 
         {site.nav.map((item, i) => (

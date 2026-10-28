@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
+import Icon from "@/components/ui/Icon";
 import styles from "./BeforeAfter.module.css";
 
 /**
@@ -62,9 +63,9 @@ export default function BeforeAfter({ before, after, initial = 50, labels = { be
       onPointerUp={onPointerUp}
       onPointerLeave={onPointerUp}
     >
-      <Image src={after.src} alt={after.alt} fill sizes="(min-width: 1024px) 640px, 100vw" />
+      <Image src={after.src} alt={after.alt} fill sizes="(min-width: 1024px) 640px, 100vw" quality={90} />
       <div className={styles.before} style={{ clipPath: `inset(0 ${100 - value}% 0 0)` }}>
-        <Image src={before.src} alt={before.alt} fill sizes="(min-width: 1024px) 640px, 100vw" />
+        <Image src={before.src} alt={before.alt} fill sizes="(min-width: 1024px) 640px, 100vw" quality={90} />
       </div>
 
       <div className={styles.handle} style={{ left: `${value}%` }}>
@@ -78,8 +79,8 @@ export default function BeforeAfter({ before, after, initial = 50, labels = { be
           aria-valuenow={Math.round(value)}
           onKeyDown={onKeyDown}
         >
-          <span>‹</span>
-          <span>›</span>
+          <Icon name="chevron-left" size={14} />
+          <Icon name="chevron-right" size={14} />
         </div>
       </div>
 

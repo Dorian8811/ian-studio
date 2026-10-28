@@ -27,7 +27,7 @@ export const perfil = {
     },
   ],
   retrato: {
-    src: "/images/food-preparacion-cocina.jpg",
+    src: "/images/food-preparacion-cocina.webp",
     width: 1086,
     height: 1448,
     alt: "Manos cortando cebollín sobre una tabla, en plena preparación de cocina.",
@@ -46,18 +46,28 @@ export const tickerItems = [
 ];
 
 /**
+ * Fuentes de un reel, en orden de preferencia: el navegador toma la primera
+ * que puede decodificar. AV1 10 bits rinde más calidad por byte; H.264 cubre
+ * los dispositivos sin decodificador AV1. Ambas las genera
+ * scripts/build-videos.mjs desde los masters de cámara.
+ */
+const reelSources = (id) => [
+  { src: `/videos/${id}.av1.mp4`, type: 'video/mp4; codecs="av01.0.08M.10, mp4a.40.2"' },
+  { src: `/videos/${id}.mp4`, type: 'video/mp4; codecs="avc1.640029, mp4a.40.2"' },
+];
+
+/**
  * 05 — Contenido vertical.
- * Reels reales en 9:16 (no fotogramas recortados). Origen: scripts/build-assets.mjs
- * transcodifica los originales de cámara (~20 Mbps) a un MP4 web de ~3 Mbps.
+ * Reels reales en 9:16 (no fotogramas recortados), intercalados por
+ * disciplina. El rótulo «Reel 01…» sale de la posición, no del id.
  */
 export const verticalSlides = [
   {
     id: "reel-01",
-    label: "Reel 01",
     categoria: "Gastronomía",
     duracion: "0:22",
     type: "video",
-    src: "/videos/reel-01.mp4",
+    sources: reelSources("reel-01"),
     poster: "/images/reel-01-poster.jpg",
     width: 1080,
     height: 1920,
@@ -65,22 +75,57 @@ export const verticalSlides = [
     alt: "Reel vertical de gastronomía: preparación y emplatado de albóndigas en cocina.",
   },
   {
+    id: "reel-03",
+    categoria: "Barbería",
+    duracion: "0:17",
+    type: "video",
+    sources: reelSources("reel-03"),
+    poster: "/images/reel-03-poster.jpg",
+    width: 1080,
+    height: 1920,
+    objectPosition: "50% 50%",
+    alt: "Reel vertical para una barbería: una anfitriona presenta el local y la atención personalizada, con subtítulos en pantalla.",
+  },
+  {
+    id: "reel-04",
+    categoria: "Eventos",
+    duracion: "0:49",
+    type: "video",
+    sources: reelSources("reel-04"),
+    poster: "/images/reel-04-poster.jpg",
+    width: 1080,
+    height: 1920,
+    objectPosition: "50% 50%",
+    alt: "Reel vertical de vida nocturna: barra, banda norteña en vivo, público bailando y celebración de aniversario en un bar.",
+  },
+  {
     id: "reel-02",
-    label: "Reel 02",
     categoria: "Gastronomía",
     duracion: "0:15",
     type: "video",
-    src: "/videos/reel-02.mp4",
+    sources: reelSources("reel-02"),
     poster: "/images/reel-02-poster.jpg",
     width: 1080,
     height: 1920,
     objectPosition: "50% 50%",
     alt: "Reel vertical de gastronomía: preparación de mezcla con huevo en cocina.",
   },
+  {
+    id: "reel-05",
+    categoria: "Barbería",
+    duracion: "0:23",
+    type: "video",
+    sources: reelSources("reel-05"),
+    poster: "/images/reel-05-poster.jpg",
+    width: 1080,
+    height: 1920,
+    objectPosition: "50% 50%",
+    alt: "Reel vertical para una barbería: un barbero habla a cámara sobre los cortes más pedidos del 2026, con subtítulos.",
+  },
 ];
 
 export const verticalNote =
-  "Cada pieza se graba y edita en 9:16 desde el guion — no es un horizontal recortado. Duración objetivo: 15–25 s.";
+  "Cada pieza se graba y edita en 9:16 desde el guion — no es un horizontal recortado. De 15 s para un plato a casi un minuto para cubrir un evento.";
 
 /**
  * 06 — Serie destacada: «Metal en movimiento».
@@ -103,7 +148,11 @@ export const featured = {
     { k: "Locación", v: "Costa Rica" },
     { k: "Año", v: "2026" },
   ],
-  /** Riel horizontal: anchos y crops literales de la maqueta. */
+  /**
+   * Riel horizontal: anchos y crops de la maqueta. Solo piezas de alta
+   * resolución — el riel mide 520 px de alto, y un archivo de 384×512 se
+   * vería ampliado más del doble en pantallas retina.
+   */
   rail: [
     {
       pieceId: "auto-porsche-gt3rs",
@@ -128,17 +177,17 @@ export const featured = {
       scale: 1,
     },
     {
-      pieceId: "auto-ferrari-sf90",
-      caption: "04 / Grid",
-      width: 392,
+      pieceId: "auto-bmw-m4-csl",
+      caption: "04 / Parrilla",
+      width: 600,
       objectPosition: "50% 50%",
       scale: 1,
     },
     {
-      pieceId: "auto-amg-gt-rojo",
-      caption: "05 / Color",
+      pieceId: "auto-mclaren-675lt",
+      caption: "05 / Faro",
       width: 392,
-      objectPosition: "50% 52%",
+      objectPosition: "62% 58%",
       scale: 1,
     },
   ],
@@ -170,14 +219,14 @@ export const contacto = {
     "Disponible para fotografía, video y contenido mensual para negocios y marcas. Siguiente paso: confirmar plan, fecha y productos.",
   cta: "Crear algo juntos",
   fondo: {
-    src: "/images/auto-porsche-gt3rs.jpg",
+    src: "/images/auto-porsche-gt3rs.webp",
     width: 1448,
     height: 1086,
   },
   fondoMobile: {
-    src: "/images/auto-amg-gt-rojo.jpg",
-    width: 384,
-    height: 512,
+    src: "/images/auto-shelby-gt500.webp",
+    width: 1086,
+    height: 1448,
   },
 };
 
@@ -190,14 +239,14 @@ export const hero = {
   texto:
     "Fotografía, video vertical y contenido mensual para negocios y marcas personales. Historias reales, imágenes cuidadas.",
   textoMobile:
-    "Fotografía, video vertical y contenido mensual. Gastronomía, espacios y automotriz.",
+    "Fotografía, video vertical y contenido mensual. Gastronomía, automotriz, producto y eventos.",
   ctaPrimario: { label: "Ver el trabajo", href: "#categorias" },
   ctaPrimarioMobile: { label: "Ver proyectos", href: "#categorias" },
   ctaSecundario: { label: "Trabajemos juntos", href: "#contacto" },
-  disciplinas: ["Gastronomía", "Automotriz", "Espacios"],
+  disciplinas: ["Gastronomía", "Automotriz", "Perfumería", "Eventos"],
   disciplinasMobile: ["Fotografía", "Video", "Contenido"],
   imagen: {
-    src: "/images/auto-mclaren-675lt.jpg",
+    src: "/images/auto-mclaren-675lt.webp",
     width: 1086,
     height: 1448,
     alt: "McLaren 675LT en una sesión automotriz en Costa Rica: frontal, faro y splitter de fibra de carbono.",
@@ -205,7 +254,7 @@ export const hero = {
     objectPositionMobile: "52% 45%",
   },
   imagenSecundaria: {
-    src: "/images/food-preparacion-cocina.jpg",
+    src: "/images/food-preparacion-cocina.webp",
     width: 1086,
     height: 1448,
     alt: "Manos cortando cebollín durante una preparación de cocina.",

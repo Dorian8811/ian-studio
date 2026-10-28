@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Icon from "@/components/ui/Icon";
 import { hero } from "@/data/content";
+import { blurFor } from "@/lib/blur";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -12,9 +14,12 @@ export default function Hero() {
             alt={hero.imagen.alt}
             fill
             sizes="(min-width: 1024px) 51vw, 100vw"
+            quality={90}
             style={{ objectPosition: hero.imagen.objectPosition }}
-            priority
+            loading="eager"
             fetchPriority="high"
+            placeholder={blurFor(hero.imagen.src) ? "blur" : "empty"}
+            blurDataURL={blurFor(hero.imagen.src)}
           />
         </div>
         <div className={styles.scrimH} />
@@ -35,9 +40,11 @@ export default function Hero() {
         </div>
 
         <h1 className={styles.heading}>
-          <span data-rv>{hero.headingA}</span>
-          <span className={styles.headingItalic} data-rv>
-            {hero.headingItalic}
+          <span className={styles.line}>
+            <span data-rv>{hero.headingA}</span>
+          </span>
+          <span className={`${styles.line} ${styles.headingItalic}`}>
+            <span data-rv>{hero.headingItalic}</span>
           </span>
         </h1>
 
@@ -50,8 +57,8 @@ export default function Hero() {
           <a href={hero.ctaPrimario.href} className={styles.ctaPrimary}>
             <span className="mobile-only">{hero.ctaPrimarioMobile.label}</span>
             <span className="desktop-only">{hero.ctaPrimario.label}</span>
-            <span className="desktop-only" aria-hidden="true" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>
-              ↓
+            <span className={`desktop-only ${styles.ctaIcon}`}>
+              <Icon name="arrow-down" size={14} />
             </span>
           </a>
           <a href={hero.ctaSecundario.href} className={styles.ctaSecondary}>

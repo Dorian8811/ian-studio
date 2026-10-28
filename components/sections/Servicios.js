@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Icon from "@/components/ui/Icon";
 import { services, serviceNote } from "@/data/services";
 import styles from "./Servicios.module.css";
 
@@ -21,7 +22,7 @@ export default function Servicios() {
             <div className={styles.mediaFrame}>
               {services.map((s, i) => (
                 <div key={s.num} className={`${styles.mediaImg} ${open === i ? styles.active : ""}`}>
-                  <Image src={s.image} alt={s.alt} fill sizes="(min-width: 1024px) 40vw, 0px" />
+                  <Image src={s.image} alt={s.alt} fill sizes="(min-width: 1024px) 40vw, 0px" quality={90} />
                 </div>
               ))}
             </div>
@@ -42,21 +43,23 @@ export default function Servicios() {
                   >
                     <span className={styles.rowNum}>{s.num}</span>
                     <h3 className={styles.rowName}>{s.name}</h3>
-                    <span className={styles.rowPlus} aria-hidden="true">
-                      +
+                    <span className={styles.rowPlus}>
+                      <Icon name="plus" size={18} />
                     </span>
                   </button>
-                  <div id={`svc-panel-${s.num}`} className={styles.panel}>
-                    <p className={styles.panelText}>{s.desc}</p>
-                    <div className={styles.tags}>
-                      {s.tags.map((t) => (
-                        <span key={t} className={styles.tag}>
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <div className={styles.mobilePreview}>
-                      <Image src={s.image} alt={s.alt} fill sizes="100vw" />
+                  <div id={`svc-panel-${s.num}`} className={styles.panel} inert={!isOpen}>
+                    <div className={styles.panelInner}>
+                      <p className={styles.panelText}>{s.desc}</p>
+                      <div className={styles.tags}>
+                        {s.tags.map((t) => (
+                          <span key={t} className={styles.tag}>
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                      <div className={styles.mobilePreview}>
+                        <Image src={s.image} alt={s.alt} fill sizes="100vw" quality={90} />
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -49,6 +49,7 @@ export default function Featured() {
                   alt={piece.alt}
                   fill
                   sizes={`${r.width}px`}
+                  quality={90}
                   style={{
                     objectPosition: r.objectPosition,
                     transform: r.scale !== 1 ? `scale(${r.scale})` : undefined,

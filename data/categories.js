@@ -5,16 +5,19 @@
  * publicar una categoría basta con poner `visible: true` (y que tenga
  * `minPiezas` fotografías reales). Nada más hay que tocar.
  *
- * Estado — septiembre 2026:
+ * Estado — octubre 2026:
  *   todo        visible   selección curada entre disciplinas
- *   gastronomia visible   5 piezas
+ *   gastronomia visible   4 piezas
  *   automotriz  visible   7 piezas
  *   perfumeria  visible   5 piezas (producto y lifestyle)
+ *   eventos     visible   3 piezas (música en vivo)
  *   espacios    oculta    solo existen el antes y el después del mismo baño;
  *                         como galería independiente sería contenido
  *                         duplicado. Vive en la sección 07 — Edición.
  *   detras      oculta    1 sola fotografía
- *   contenido   oculta    todavía no hay material propio en 9:16
+ *   contenido   oculta    el material 9:16 son reels de video y viven en la
+ *                         sección 05 — Contenido vertical; esta galería es
+ *                         solo de fotografía.
  */
 
 /** Mínimo de piezas reales para que una categoría pueda mostrarse. */
@@ -65,6 +68,17 @@ export const categories = [
     visible: true,
     agregada: false,
     portada: "perfume-jpg-frasco-rojo",
+  },
+  {
+    id: "eventos",
+    slug: "eventos",
+    nombre: "Eventos",
+    nombreCorto: "Eventos",
+    descripcion: "Escenario, luz y público",
+    metadato: "Escenario, luz y público",
+    visible: true,
+    agregada: false,
+    portada: "eventos-escenario-humo",
   },
   {
     id: "espacios",

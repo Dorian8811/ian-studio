@@ -41,9 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  gap: 2px;
   color: var(--color-white);
   pointer-events: auto;
   cursor: ew-resize;

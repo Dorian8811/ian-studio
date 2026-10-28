@@ -20,17 +20,17 @@
     "height": 512
   },
   {
-    "file": "auto-mclaren-675lt.jpg",
+    "file": "auto-mclaren-675lt.webp",
     "width": 1086,
     "height": 1448
   },
   {
-    "file": "auto-porsche-gt3rs.jpg",
+    "file": "auto-porsche-gt3rs.webp",
     "width": 1448,
     "height": 1086
   },
   {
-    "file": "auto-shelby-gt500.jpg",
+    "file": "auto-shelby-gt500.webp",
     "width": 1086,
     "height": 1448
   },
@@ -50,27 +50,42 @@
     "height": 1448
   },
   {
-    "file": "food-albondigas-plato.jpg",
-    "width": 2000,
-    "height": 2500
+    "file": "eventos-escenario-humo.jpg",
+    "width": 2156,
+    "height": 3840
   },
   {
-    "file": "food-bandeja-carne-mechada.jpg",
+    "file": "eventos-escenario-rojo.jpg",
+    "width": 2156,
+    "height": 3840
+  },
+  {
+    "file": "eventos-guitarra-acustica.webp",
+    "width": 941,
+    "height": 1672
+  },
+  {
+    "file": "food-albondigas-plato.jpg",
+    "width": 3072,
+    "height": 3840
+  },
+  {
+    "file": "food-bandeja-carne-mechada.webp",
     "width": 1024,
     "height": 1536
   },
   {
-    "file": "food-lasana-vino.jpg",
-    "width": 897,
-    "height": 1600
+    "file": "food-lasana-vino.webp",
+    "width": 939,
+    "height": 1675
   },
   {
-    "file": "food-preparacion-cocina.jpg",
+    "file": "food-preparacion-cocina.webp",
     "width": 1086,
     "height": 1448
   },
   {
-    "file": "food-spaghetti-albondigas.jpg",
+    "file": "food-spaghetti-albondigas.webp",
     "width": 1023,
     "height": 1537
   },
@@ -78,5 +93,55 @@
     "file": "logo.png",
     "width": 713,
     "height": 582
+  },
+  {
+    "file": "perfume-amigas-cajas.jpg",
+    "width": 1600,
+    "height": 2850
+  },
+  {
+    "file": "perfume-game-of-spades-duo.jpg",
+    "width": 1600,
+    "height": 2850
+  },
+  {
+    "file": "perfume-jpg-aplicacion.jpg",
+    "width": 1600,
+    "height": 2850
+  },
+  {
+    "file": "perfume-jpg-frasco-rojo.jpg",
+    "width": 1600,
+    "height": 2850
+  },
+  {
+    "file": "perfume-jpg-la-belle.jpg",
+    "width": 1600,
+    "height": 2850
+  },
+  {
+    "file": "reel-01-poster.jpg",
+    "width": 1080,
+    "height": 1920
+  },
+  {
+    "file": "reel-02-poster.jpg",
+    "width": 1080,
+    "height": 1920
+  },
+  {
+    "file": "reel-03-poster.jpg",
+    "width": 1080,
+    "height": 1920
+  },
+  {
+    "file": "reel-04-poster.jpg",
+    "width": 1080,
+    "height": 1920
+  },
+  {
+    "file": "reel-05-poster.jpg",
+    "width": 1080,
+    "height": 1920
   }
 ]

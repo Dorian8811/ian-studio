@@ -45,7 +45,7 @@
   font-size: 9px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.4);
+  color: rgba(246, 247, 250, 0.56);
   padding-bottom: 22px;
   border-bottom: 1px solid rgba(246, 247, 250, 0.1);
 }
@@ -72,7 +72,7 @@
 }
 
 .headingMuted {
-  color: rgba(246, 247, 250, 0.4);
+  color: rgba(246, 247, 250, 0.56);
 }
 
 .contactRow {
@@ -108,7 +108,7 @@
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.42);
+  color: rgba(246, 247, 250, 0.56);
 }
 
 .linkValue {
@@ -127,8 +127,10 @@
   .linkValue { font-size: 27px; }
 }
 
-.linkValue:hover {
-  border-color: var(--a);
+@media (hover: hover) and (pointer: fine) {
+  .linkValue:hover {
+    border-color: var(--a);
+  }
 }
 
 .ctaButton {
@@ -153,8 +155,26 @@
 }
 
 .ctaButton:hover {
-  transform: translateY(-4px);
   color: #000;
+}
+
+.ctaIcon {
+  display: inline-flex;
+  transition: transform 0.45s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctaButton:hover {
+    transform: translateY(-4px);
+  }
+  .ctaButton:hover .ctaIcon {
+    transform: translate(2px, -2px);
+  }
+}
+
+.ctaButton:active {
+  transform: scale(0.97);
+  transition-duration: 160ms;
 }
 
 .text {
@@ -178,10 +198,10 @@
   flex-direction: column;
   gap: 16px;
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 9.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(246, 247, 250, 0.32);
+  color: rgba(246, 247, 250, 0.5);
 }
 
 @media (min-width: 1024px) {

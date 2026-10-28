@@ -68,7 +68,7 @@ export default function Web() {
                 </div>
                 <div className={styles.cursorWrapper}>
                   <svg className={styles.cursor} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.5 3L18.5 11.5L12 13L10 19.5L5.5 3Z" fill="var(--color-blue)" stroke="var(--color-black)" strokeWidth="1.5" strokeLinejoin="round"/>
+                    <path d="M5.5 3L18.5 11.5L12 13L10 19.5L5.5 3Z" fill="var(--w)" stroke="var(--color-black)" strokeWidth="1.5" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>

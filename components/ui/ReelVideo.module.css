@@ -8,29 +8,45 @@
   background: var(--color-surface);
 }
 
-.muteBtn {
+.controls {
   position: absolute;
   bottom: 12px;
   right: 12px;
   z-index: 2;
-  width: 34px;
-  height: 34px;
+  display: flex;
+  gap: 8px;
+}
+
+/* 40px visibles; el área táctil llega a 44px con el pseudo-elemento. */
+.ctrlBtn {
+  position: relative;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(246, 247, 250, 0.3);
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--color-white);
-  transition: border-color 0.3s;
+  transition: border-color 0.3s ease, transform 160ms var(--ease-out);
 }
 
-.muteBtn:hover {
-  border-color: var(--w);
+.ctrlBtn::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
 }
 
-.muteBtn svg {
-  width: 15px;
-  height: 15px;
+.ctrlBtn:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctrlBtn:hover {
+    border-color: var(--w);
+  }
 }

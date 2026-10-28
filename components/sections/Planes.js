@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { plans, plansMeta, comparisonRows } from "@/data/plans";
 import { site } from "@/data/site";
+import Icon from "@/components/ui/Icon";
 import styles from "./Planes.module.css";
 
 const recommendedIndex = plans.findIndex((p) => p.recommended);
@@ -64,7 +65,8 @@ export default function Planes() {
                   href={site.contact.whatsapp.href}
                   className={isActive ? styles.ctaButton : styles.ctaLink}
                 >
-                  {p.cta} {isActive ? "" : "→"}
+                  {p.cta}
+                  {!isActive && <Icon name="arrow-right" size={13} />}
                 </a>
               </div>
             );
@@ -117,11 +119,11 @@ export default function Planes() {
             aria-controls="compare-panel"
           >
             <span>{compareOpen ? "Ocultar comparación de alcance" : "Comparar alcance completo"}</span>
-            <span className={styles.comparePlus} aria-hidden="true">
-              +
+            <span className={styles.comparePlus}>
+              <Icon name="plus" size={16} />
             </span>
           </button>
-          <div id="compare-panel" className={styles.comparePanel}>
+          <div id="compare-panel" className={styles.comparePanel} inert={!compareOpen}>
             <div className={styles.compareScroll}>
               <div className={styles.compareTable}>
                 <div className={styles.compareHead}>
