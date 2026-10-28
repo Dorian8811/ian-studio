@@ -108,6 +108,52 @@ async function writePhoto({ from, to, mode }) {
     .toFile(dst);
 }
 
+const FAVICON_SIZES = [16, 32, 48];
+
+/**
+ * favicon.ico con PNG embebidos (formato ICO admitido desde Windows Vista y
+ * por todos los navegadores). Navegadores y buscadores piden /favicon.ico
+ * aunque exista icon.png. A 16–48 px el margen negro del master se come el
+ * monograma, así que se recorta al contenido y se deja un margen de ~10 %.
+ */
+async function writeFavicon(from, to) {
+  const trimmed = await sharp(from).trim({ background: "#000000", threshold: 24 }).toBuffer({ resolveWithObject: true });
+  const side = Math.round(Math.max(trimmed.info.width, trimmed.info.height) * 1.2);
+  const square = await sharp(trimmed.data)
+    .resize(side, side, { fit: "contain", background: "#000000" })
+    .png()
+    .toBuffer();
+
+  // Cada PNG embebido tiene que ser RGBA: el lector de ICO (el de Next
+  // incluido) rechaza PNG RGB, y el master sobre negro no trae canal alfa.
+  const images = await Promise.all(
+    FAVICON_SIZES.map((s) => sharp(square).resize(s, s).ensureAlpha().png({ compressionLevel: 9 }).toBuffer()),
+  );
+
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); // reservado
+  header.writeUInt16LE(1, 2); // 1 = icono
+  header.writeUInt16LE(images.length, 4);
+
+  let offset = 6 + 16 * images.length;
+  const entries = images.map((png, i) => {
+    const s = FAVICON_SIZES[i];
+    const e = Buffer.alloc(16);
+    e.writeUInt8(s, 0); // ancho
+    e.writeUInt8(s, 1); // alto
+    e.writeUInt8(0, 2); // sin paleta
+    e.writeUInt8(0, 3);
+    e.writeUInt16LE(1, 4); // planos
+    e.writeUInt16LE(32, 6); // bits por píxel
+    e.writeUInt32LE(png.length, 8);
+    e.writeUInt32LE(offset, 12);
+    offset += png.length;
+    return e;
+  });
+
+  await writeFile(to, Buffer.concat([header, ...entries, ...images]));
+}
+
 async function main() {
   await mkdir(OUT_IMG, { recursive: true });
 
@@ -136,6 +182,8 @@ async function main() {
   log("app/icon.png 512×512");
   await sharp(iconSource).resize(180, 180, { fit: "cover" }).png({ compressionLevel: 9 }).toFile(path.join(OUT_APP, "apple-icon.png"));
   log("app/apple-icon.png 180×180");
+  await writeFavicon(iconSource, path.join(OUT_APP, "favicon.ico"));
+  log(`app/favicon.ico ${FAVICON_SIZES.join("/")} px`);
 
   // ------------------------------------------------------------ open graph
   // Crop horizontal fuerte del McLaren 675LT: frontal, faro y splitter de

@@ -42,9 +42,10 @@ npm run lint
 ## Estructura
 
 ```
-app/                  App Router: layout, page, SEO (sitemap, robots, OG, íconos)
+app/                  App Router: layout, page, /privacidad, /terminos, SEO (sitemap, robots, OG, íconos)
 components/
-  layout/             Nav, menú móvil, motor de motion global
+  layout/             Nav, menú móvil, motor de motion global, WhatsApp / volver arriba flotantes
+  legal/              Plantilla de las páginas legales (contenido en data/legal.js)
   sections/            Las 11 secciones de la landing
   portfolio/           Filtro de categorías, galería editorial, lightbox
   ui/                  Piezas reutilizables (íconos, comparador, reel)
@@ -154,6 +155,11 @@ las URLs absolutas generadas para metadata.
 6. Dominio propio: Project Settings → Domains → añade el dominio y sigue
    las instrucciones de DNS. Actualiza `NEXT_PUBLIC_SITE_URL` cuando el
    dominio esté activo y vuelve a desplegar.
+7. Estadísticas: el sitio ya incluye `<Analytics />` de Vercel Web
+   Analytics (sin cookies, por eso no hay banner de consentimiento). Solo
+   empieza a registrar visitas cuando se activa en el panel del proyecto →
+   **Analytics → Enable**. Si se cambia por una herramienta que use cookies,
+   hay que actualizar `/privacidad` (`data/legal.js`) y pedir consentimiento.
 
 ## Material privado
 

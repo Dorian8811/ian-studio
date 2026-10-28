@@ -10,7 +10,7 @@
  *   <id>.mp4       H.264 High — respaldo para navegadores/dispositivos sin
  *                  decodificador AV1 (buena parte de los iPhone).
  *
- * Y el poster en `public/images/<id>-poster.jpg`, sacado del master a
+ * Y el poster en `public/images/<id>-poster.jpg` (+ `.webp` para el <video>), sacado del master a
  * resolución completa (no del archivo ya comprimido).
  *
  * Los masters 4K se reducen a 1080×1920 con lanczos: el reel nunca se
@@ -73,6 +73,9 @@ const AV1 = [
   "-tag:v", "av01",
 ];
 
+/** Poster del <video>: solo se ve hasta que arranca el reel. */
+const POSTER_WEBP = { quality: 80, effort: 6 };
+
 const log = (...a) => console.log("  ", ...a);
 
 function ffmpeg(args) {
@@ -102,13 +105,17 @@ async function buildReel({ id, from, poster }) {
   log(`${id}.av1.mp4  AV1    ${await mb(av1)}`);
 
   // Poster: PNG sin pérdida desde el master, luego JPEG 4:4:4 con sharp.
+  // El JPEG es la fuente que next/image convierte (tarjetas de servicios y
+  // especialidades); el atributo `poster` del <video> no pasa por next/image,
+  // así que lleva su propio WebP ya optimizado.
   const tmp = path.join(OUT_IMG, `.${id}-poster.png`);
   await ffmpeg(["-ss", String(poster), "-i", src, "-frames:v", "1", "-vf", SCALE, tmp]);
   await sharp(tmp)
     .jpeg({ quality: 90, progressive: true, mozjpeg: true, chromaSubsampling: "4:4:4" })
     .toFile(path.join(OUT_IMG, `${id}-poster.jpg`));
+  await sharp(tmp).webp(POSTER_WEBP).toFile(path.join(OUT_IMG, `${id}-poster.webp`));
   await unlink(tmp);
-  log(`${id}-poster.jpg  (t=${poster}s)`);
+  log(`${id}-poster.jpg + .webp  (t=${poster}s)`);
 }
 
 async function main() {

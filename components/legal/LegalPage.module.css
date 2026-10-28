@@ -1,0 +1,245 @@
+/* Páginas legales — misma marca y tipografía que la landing, pero en
+   formato de lectura: una columna de ~68 caracteres alineada a la
+   izquierda y texto con más contraste que los metadatos de la portada. */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 800;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.bar {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  line-height: 1;
+}
+
+.brand img {
+  height: 34px;
+  width: auto;
+}
+
+.wordmark {
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.72);
+  white-space: nowrap;
+  transition: color var(--dur-ui) ease;
+}
+
+.main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(56px, 10vw, 112px) 20px 0;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--a-soft);
+}
+
+.heading {
+  margin: 20px 0 0;
+  font-size: clamp(40px, 9vw, 80px);
+  line-height: 0.92;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.headingItalic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--w);
+}
+
+.updated {
+  margin: 28px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.6);
+}
+
+.intro {
+  margin: 36px 0 0;
+  font-size: clamp(17px, 2.2vw, 19px);
+  line-height: 1.6;
+  color: var(--color-white);
+  text-wrap: pretty;
+}
+
+.section {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.sectionTitle {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: var(--a-soft);
+}
+
+.text,
+.list li {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: rgba(246, 247, 250, 0.78);
+  text-wrap: pretty;
+}
+
+.text {
+  margin: 16px 0 0;
+}
+
+.list {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.list li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85em;
+  width: 10px;
+  height: 1px;
+  background: var(--a-soft);
+}
+
+.contact {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact li {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.contactLabel {
+  flex: none;
+  width: 92px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.6);
+}
+
+.contact a {
+  display: inline-block;
+  padding: 8px 0;
+  font-size: 16px;
+  border-bottom: 1px solid var(--color-hairline-strong);
+  transition: border-color var(--dur-ui) ease, color var(--dur-ui) ease;
+}
+
+.footer {
+  margin-top: 96px;
+  padding: 26px 0 40px;
+  border-top: 1px solid var(--color-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 32px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 250, 0.6);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.footerLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: rgba(246, 247, 250, 0.72);
+  transition: color var(--dur-ui) ease;
+}
+
+.footerLinks a[aria-current="page"] {
+  color: var(--color-white);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .back:hover,
+  .footerLinks a:hover {
+    color: var(--color-white);
+  }
+
+  .contact a:hover {
+    border-color: var(--a-soft);
+  }
+}

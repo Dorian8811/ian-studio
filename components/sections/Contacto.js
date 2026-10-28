@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { contacto } from "@/data/content";
+import { legalLinks } from "@/data/legal";
 import { site } from "@/data/site";
 import Icon from "@/components/ui/Icon";
 import styles from "./Contacto.module.css";
@@ -64,9 +66,18 @@ export default function Contacto() {
               <span>{site.tagline}</span>
             </div>
           </div>
-          <span>
-            {site.location} / {site.year}
-          </span>
+          <div className={styles.footerMeta}>
+            <nav aria-label="Legal" className={styles.footerLegal}>
+              {legalLinks.map((l) => (
+                <Link key={l.href} href={l.href}>
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+            <span>
+              {site.location} / {site.year}
+            </span>
+          </div>
         </footer>
       </div>
     </section>

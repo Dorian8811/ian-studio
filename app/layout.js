@@ -1,4 +1,5 @@
 import { Archivo, Bodoni_Moda, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { site, siteUrl } from "@/data/site";
 
@@ -82,6 +83,10 @@ export default function RootLayout({ children }) {
         </a>
         <div className="grain" aria-hidden="true" />
         {children}
+        {/* Vercel Web Analytics: sin cookies ni identificadores guardados en
+            el navegador, por eso el sitio no necesita banner de consentimiento
+            (ver /privacidad). Solo envía datos en producción en Vercel. */}
+        <Analytics />
       </body>
     </html>
   );

@@ -190,9 +190,11 @@
   .text { margin: 52px 0 0; font-size: 15.5px; line-height: 1.6; }
 }
 
+/* El padding inferior deja libre la esquina del botón flotante «volver
+   arriba» (FloatingActions: 48 px + 16/28 px de margen) al final del scroll. */
 .footer {
   margin-top: 80px;
-  padding: 26px 0;
+  padding: 26px 0 84px;
   border-top: 1px solid rgba(246, 247, 250, 0.1);
   display: flex;
   flex-direction: column;
@@ -207,7 +209,7 @@
 @media (min-width: 1024px) {
   .footer {
     margin-top: 120px;
-    padding: 30px 0;
+    padding: 30px 0 96px;
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
@@ -236,4 +238,38 @@
   font-weight: 600;
   letter-spacing: 0.07em;
   color: var(--color-white);
+}
+
+.footerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 28px;
+}
+
+.footerLegal {
+  display: flex;
+  gap: 22px;
+}
+
+/* 44 px de alto: el texto del pie es de 9.5 px y sin esto el área táctil
+   quedaría por debajo del mínimo en móvil. */
+.footerLegal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: rgba(246, 247, 250, 0.72);
+  transition: color var(--dur-ui) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footerLegal a:hover {
+    color: var(--color-white);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footerMeta {
+    gap: 40px;
+  }
 }

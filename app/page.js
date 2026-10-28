@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Nav from "@/components/layout/Nav";
 import MotionRoot from "@/components/layout/MotionRoot";
+import FloatingActions from "@/components/layout/FloatingActions";
 import Hero from "@/components/sections/Hero";
 import Ticker from "@/components/sections/Ticker";
 import Perfil from "@/components/sections/Perfil";
@@ -66,6 +67,7 @@ export default function Home() {
         <Extras />
         <Contacto />
       </main>
+      <FloatingActions />
     </>
   );
 }

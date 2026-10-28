@@ -1,0 +1,102 @@
+/* Por debajo del header (800), del menú móvil (950) y del visor (2000):
+   cualquiera de esos los tapa sin lógica extra. */
+.stack {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .stack {
+    right: 28px;
+    bottom: 28px;
+  }
+}
+
+/* Oculto: se desvanece primero y `visibility` cambia al final de la
+   transición, para que el fundido de salida se vea. */
+.btn {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity var(--dur-ui) var(--ease-ui), transform var(--dur-ui) var(--ease-out),
+    visibility 0s linear var(--dur-ui), background var(--dur-ui) ease, border-color var(--dur-ui) ease;
+}
+
+.shown .btn:not(.away) {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity var(--dur-ui) var(--ease-ui), transform var(--dur-ui) var(--ease-out),
+    visibility 0s linear 0s, background var(--dur-ui) ease, border-color var(--dur-ui) ease;
+}
+
+.shown .btn:not(.away):active {
+  transform: scale(0.97);
+  transition-duration: 160ms;
+}
+
+.top {
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--color-hairline-strong);
+  color: var(--color-white);
+}
+
+/* Mismo tratamiento que el CTA de contacto: blanco sobre negro. */
+.whatsapp {
+  background: var(--color-white);
+  color: #000;
+}
+
+.label {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .whatsapp {
+    width: auto;
+    padding: 0 20px 0 16px;
+  }
+
+  .label {
+    display: inline;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .top:hover {
+    border-color: var(--w);
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .whatsapp:hover {
+    color: #000;
+    background: #fff;
+  }
+}
+
+@media print {
+  .stack {
+    display: none;
+  }
+}

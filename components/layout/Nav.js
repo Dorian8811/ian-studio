@@ -35,7 +35,8 @@ export default function Nav() {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
         <div className={styles.bar}>
           <a href="#top" className={styles.brand}>
-            <Image src="/images/logo.png" alt={site.name} width={94} height={77} loading="eager" />
+            {/* Decorativo: el enlace ya se nombra con el wordmark de al lado. */}
+            <Image src="/images/logo.png" alt="" width={94} height={77} loading="eager" />
             <span className={styles.brandText}>
               <span className={styles.wordmark}>IAN STUDIO</span>
               <span className={styles.sublabel}>{site.tagline.toUpperCase()}</span>
